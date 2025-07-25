@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([AdminSeeder::class]); // Call AdminSeeder file to insert dummy data
+        
         // User::factory(10)->create();
 
         User::factory()->create([
