@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,3 +19,18 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+// Group for admin routes with the '/admin' prefix
+Route::prefix('admin')->group(function () {
+    // Public admin routes (no middleware)
+    Route::get('/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
+    Route::post('/login_submit', [AdminController::class, 'AdminLoginSubmit'])->name('admin.login_submit');
+    // Protected admin routes
+    Route::middleware('admin')->group(function(){
+        Route::get('/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+        Route::get('/logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
+    });
+
+});
+
