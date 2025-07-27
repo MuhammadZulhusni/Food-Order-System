@@ -20,7 +20,7 @@ class AdminController extends Controller
     // Show admin dashboard after login
     public function AdminDashboard()
     {
-        return view('admin.admin_dasboard');
+        return view('admin.index');
     }
 
     // Handle admin login form submission
