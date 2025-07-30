@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
@@ -133,5 +132,109 @@ class AdminController extends Controller
 
         // Redirect back to login with success message
         return redirect()->route('admin.login')->with('success', 'Password reset successfully');
+    }
+
+    public function AdminProfile()
+    {
+        // Get authenticated admin's ID
+        $id = Auth::guard('admin')->id();
+        // Find admin data by ID
+        $profileData = Admin::find($id);
+        // Return view with profile data
+        return view('admin.admin_profile',compact('profileData'));      
+    }
+
+    public function AdminProfileStore(Request $request){
+        // Get authenticated admin's ID
+        $id = Auth::guard('admin')->id();
+        // Find admin data by ID
+        $data = Admin::find($id);
+
+        // Update basic profile fields
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->phone = $request->phone;
+        $data->address = $request->address; 
+
+        // Store old photo path for potential deletion
+        $oldPhotoPath = $data->photo;
+
+        // Handle profile photo upload
+        if ($request->hasFile('photo')) {
+           $file = $request->file('photo');
+           // Generate unique filename
+           $filename = time().'.'.$file->getClientOriginalExtension();
+           // Move new photo to public path
+           $file->move(public_path('upload/admin_images'),$filename);
+           // Update photo filename in database
+           $data->photo = $filename;
+
+           // Delete old photo if it exists and is different from the new one
+           if ($oldPhotoPath && $oldPhotoPath !== $filename) {
+             $this->deleteOldImage($oldPhotoPath);
+           }
+        }
+        // Save updated admin data
+        $data->save();
+        
+        // Prepare success notification
+        $notification = array(
+            'message' => 'Profile Updated Successfully',
+            'alert-type' => 'success'
+        );
+        
+        // Redirect back with notification
+        return redirect()->back()->with($notification);
+    }
+    
+    // Deletes an old image file from the server
+    private function deleteOldImage(string $oldPhotoPath): void {
+        $fullPath = public_path('upload/admin_images/'.$oldPhotoPath);
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
+        }
+    }
+
+    public function AdminChangePassword(){
+        // Get authenticated admin's ID
+        $id = Auth::guard('admin')->id();
+        // Find admin data by ID
+        $profileData = Admin::find($id);
+        // Return view with profile data
+        return view('admin.admin_change_password',compact('profileData'));
+    }
+
+    public function AdminPasswordUpdate(Request $request){
+        // Get authenticated admin user
+        $admin = Auth::guard('admin')->user();
+        // Validate password change request
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed'
+        ]);
+
+        // Check if old password matches current password
+        if (!Hash::check($request->old_password,$admin->password)) {
+            // Prepare error notification
+            $notification = array(
+                'message' => 'Old Password Does not Match!',
+                'alert-type' => 'error'
+            );
+            // Redirect back with error notification
+            return back()->with($notification);
+        }
+        /// Update the new password 
+        // Hash and update admin's password
+        Admin::whereId($admin->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        // Prepare success notification
+        $notification = array(
+            'message' => 'Password Change Successfully',
+            'alert-type' => 'success'
+        );
+        // Redirect back with success notification
+        return back()->with($notification);
     }
 }
