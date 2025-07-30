@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
@@ -38,6 +39,20 @@ Route::prefix('admin')->group(function () {
         Route::post('/profile/store', [AdminController::class, 'AdminProfileStore'])->name('admin.profile.store');
         Route::get('/change/password', [AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
         Route::post('/admin/password/update', [AdminController::class, 'AdminPasswordUpdate'])->name('admin.password.update');
+    });
+});
+
+// Group for client routes with the '/client' prefix
+Route::prefix('client')->group(function () {
+    // Public client routes (no middleware)
+    Route::get('/login', [ClientController::class, 'ClientLogin'])->name('client.login');
+    Route::get('/register', [ClientController::class, 'ClientRegister'])->name('client.register');
+    Route::post('/register/submit', [ClientController::class, 'ClientRegisterSubmit'])->name('client.register.submit');
+    Route::post('/login_submit', [ClientController::class, 'ClientLoginSubmit'])->name('client.login_submit');
+
+    // Protected client routes
+    Route::middleware('client')->group(function(){
+        Route::get('/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.dashboard');
     });
 });
 

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Admin Login</title>
+    <title>Client Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -13,6 +13,7 @@
     <link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body>
@@ -26,13 +27,13 @@
                             <div class="d-flex flex-column h-100">
                                 <div class="mb-4 mb-md-5 text-center">
                                     <a href="index.html" class="d-block auth-logo">
-                                        <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Admin Login</span>
+                                        <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Client Register</span>
                                     </a>
                                 </div>
                                 <div class="auth-content my-auto">
                                     <div class="text-center">
                                         <h5 class="mb-0">Welcome Back !</h5>
-                                        <p class="text-muted mt-2">Sign in to continue to Minia.</p>
+                                        <p class="text-muted mt-2">Sign in to continue to Client.</p>
                                     </div>
 
                                     {{-- Validation Error Display --}}
@@ -46,7 +47,7 @@
                                         </div>
                                     @endif
 
-                                    {{-- Session Error/Success Messages (Consider using Toastr.js for better UX, similar to client login) --}}
+                                    {{-- Session Error/Success Messages (Consider using Toastr.js for better UX) --}}
                                     @if (Session::has('error'))
                                         <div class="alert alert-danger mt-3">
                                             <ul class="mb-0">
@@ -62,9 +63,22 @@
                                         </div>
                                     @endif
 
-                                    {{-- Admin Login Form --}}
-                                    <form class="mt-4 pt-2" action="{{ route('admin.login_submit') }}" method="post">
+                                    {{-- Registration Form --}}
+                                    <form class="mt-4 pt-2" action="{{ route('client.register.submit') }}" method="post">
                                         @csrf
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Restaurant Name</label>
+                                            <input type="text" name="name" class="form-control" id="name" placeholder="Enter Name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Phone</label>
+                                            <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Address</label>
+                                            <input type="text" name="address" class="form-control" id="address" placeholder="Enter Address">
+                                        </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Email</label>
@@ -95,7 +109,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In</button>
+                                            <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Register</button>
                                         </div>
                                     </form>
 
@@ -123,14 +137,14 @@
                                         </ul>
                                     </div>
 
-                                    {{-- Don't have an account? --}}
+                                    {{-- Already have an account? --}}
                                     <div class="mt-5 text-center">
-                                        <p class="text-muted mb-0">Don't have an account ? <a href="auth-register.html" class="text-primary fw-semibold"> Signup now </a> </p>
+                                        <p class="text-muted mb-0">Already have an account? <a href="auth-login.html" class="text-primary fw-semibold"> Login now </a> </p>
                                     </div>
                                 </div>
                                 {{-- Footer --}}
                                 <div class="mt-4 mt-md-5 text-center">
-                                    <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> Zulhusni . Crafted with <i class="mdi mdi-heart text-danger"></i> by Zul</p>
+                                    <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> EasyLearing . Crafted with <i class="mdi mdi-heart text-danger"></i> by EasyLearing</p>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +165,7 @@
                                         <div class="carousel-indicators carousel-indicators-rounded justify-content-start ms-0 mb-0">
                                             <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                                             <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                            <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                            <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-bs-label="Slide 3"></button>
                                         </div>
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">

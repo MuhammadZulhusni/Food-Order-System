@@ -2,21 +2,23 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8" />
-    <title>Admin Login</title>
+    <title>Client Login </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
 
     <link rel="stylesheet" href="{{ asset('backend/assets/css/preloader.min.css') }}" type="text/css" />
+
     <link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>
 
 <body>
-
     <div class="auth-page">
         <div class="container-fluid p-0">
             <div class="row g-0">
@@ -26,16 +28,15 @@
                             <div class="d-flex flex-column h-100">
                                 <div class="mb-4 mb-md-5 text-center">
                                     <a href="index.html" class="d-block auth-logo">
-                                        <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Admin Login</span>
+                                        <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Client Login</span>
                                     </a>
                                 </div>
                                 <div class="auth-content my-auto">
                                     <div class="text-center">
                                         <h5 class="mb-0">Welcome Back !</h5>
-                                        <p class="text-muted mt-2">Sign in to continue to Minia.</p>
+                                        <p class="text-muted mt-2">Sign in to continue to Client.</p>
                                     </div>
 
-                                    {{-- Validation Error Display --}}
                                     @if ($errors->any())
                                         <div class="alert alert-danger mt-3">
                                             <ul class="mb-0">
@@ -46,24 +47,7 @@
                                         </div>
                                     @endif
 
-                                    {{-- Session Error/Success Messages (Consider using Toastr.js for better UX, similar to client login) --}}
-                                    @if (Session::has('error'))
-                                        <div class="alert alert-danger mt-3">
-                                            <ul class="mb-0">
-                                                <li>{{ Session::get('error') }}</li>
-                                            </ul>
-                                        </div>
-                                    @endif
-                                    @if (Session::has('success'))
-                                        <div class="alert alert-success mt-3">
-                                            <ul class="mb-0">
-                                                <li>{{ Session::get('success') }}</li>
-                                            </ul>
-                                        </div>
-                                    @endif
-
-                                    {{-- Admin Login Form --}}
-                                    <form class="mt-4 pt-2" action="{{ route('admin.login_submit') }}" method="post">
+                                    <form class="mt-4 pt-2" action="{{ route('client.login_submit') }}" method="post">
                                         @csrf
 
                                         <div class="mb-3">
@@ -90,7 +74,7 @@
                                         <div class="row mb-4">
                                             <div class="col">
                                                 <div class="form-check">
-                                                    {{-- Remember Me checkbox can be placed here if needed --}}
+                                                    {{-- You can add a "Remember Me" checkbox here if needed --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -99,11 +83,11 @@
                                         </div>
                                     </form>
 
-                                    {{-- Social Login Options --}}
                                     <div class="mt-4 pt-2 text-center">
                                         <div class="signin-other-title">
                                             <h5 class="font-size-14 mb-3 text-muted fw-medium">- Sign in with -</h5>
                                         </div>
+
                                         <ul class="list-inline mb-0">
                                             <li class="list-inline-item">
                                                 <a href="javascript:void()" class="social-list-item bg-primary text-white border-primary">
@@ -123,26 +107,31 @@
                                         </ul>
                                     </div>
 
-                                    {{-- Don't have an account? --}}
                                     <div class="mt-5 text-center">
                                         <p class="text-muted mb-0">Don't have an account ? <a href="auth-register.html" class="text-primary fw-semibold"> Signup now </a> </p>
                                     </div>
                                 </div>
-                                {{-- Footer --}}
                                 <div class="mt-4 mt-md-5 text-center">
-                                    <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> Zulhusni . Crafted with <i class="mdi mdi-heart text-danger"></i> by Zul</p>
+                                    <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> EasyLearing . Crafted with <i class="mdi mdi-heart text-danger"></i> by EasyLearing</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                {{-- Carousel Section --}}
+                    </div>
                 <div class="col-xxl-9 col-lg-8 col-md-7">
                     <div class="auth-bg pt-md-5 p-4 d-flex">
                         <div class="bg-overlay bg-primary"></div>
                         <ul class="bg-bubbles">
-                            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
                         </ul>
                         <div class="row justify-content-center align-items-center">
                             <div class="col-xl-7">
@@ -157,9 +146,13 @@
                                             <div class="carousel-item active">
                                                 <div class="testi-contain text-white">
                                                     <i class="bx bxs-quote-alt-left text-success display-6"></i>
+
                                                     <h4 class="mt-4 fw-medium lh-base text-white">“I feel confident
-                                                        imposing change on myself. It's a lot more progressing fun than looking back.
-                                                        That's why I ultricies enim at malesuada nibh diam on tortor neaded to throw curve balls.”
+                                                        imposing change
+                                                        on myself. It's a lot more progressing fun than looking back.
+                                                        That's why
+                                                        I ultricies enim
+                                                        at malesuada nibh diam on tortor neaded to throw curve balls.”
                                                     </h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
@@ -167,7 +160,8 @@
                                                                 <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" class="avatar-md img-fluid rounded-circle" alt="...">
                                                             </div>
                                                             <div class="flex-grow-1 ms-3 mb-4">
-                                                                <h5 class="font-size-18 text-white">Richard Drews</h5>
+                                                                <h5 class="font-size-18 text-white">Richard Drews
+                                                                </h5>
                                                                 <p class="mb-0 text-white-50">Web Designer</p>
                                                             </div>
                                                         </div>
@@ -178,16 +172,21 @@
                                             <div class="carousel-item">
                                                 <div class="testi-contain text-white">
                                                     <i class="bx bxs-quote-alt-left text-success display-6"></i>
+
                                                     <h4 class="mt-4 fw-medium lh-base text-white">“Our task must be to
                                                         free ourselves by widening our circle of compassion to embrace
-                                                        all living creatures and the whole of quis consectetur nunc sit amet semper justo. nature and its beauty.”</h4>
+                                                        all living
+                                                        creatures and
+                                                        the whole of quis consectetur nunc sit amet semper justo. nature
+                                                        and its beauty.”</h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-shrink-0">
                                                                 <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" class="avatar-md img-fluid rounded-circle" alt="...">
                                                             </div>
                                                             <div class="flex-grow-1 ms-3 mb-4">
-                                                                <h5 class="font-size-18 text-white">Rosanna French</h5>
+                                                                <h5 class="font-size-18 text-white">Rosanna French
+                                                                </h5>
                                                                 <p class="mb-0 text-white-50">Web Developer</p>
                                                             </div>
                                                         </div>
@@ -198,32 +197,35 @@
                                             <div class="carousel-item">
                                                 <div class="testi-contain text-white">
                                                     <i class="bx bxs-quote-alt-left text-success display-6"></i>
+
                                                     <h4 class="mt-4 fw-medium lh-base text-white">“I've learned that
                                                         people will forget what you said, people will forget what you
-                                                        did, but people will never forget
-                                                        how donec in efficitur lectus, nec lobortis metus you made them feel.”</h4>
+                                                        did,
+                                                        but people will never forget
+                                                        how donec in efficitur lectus, nec lobortis metus you made them
+                                                        feel.”</h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" class="avatar-md img-fluid rounded-circle" alt="...">
                                                             <div class="flex-1 ms-3 mb-4">
                                                                 <h5 class="font-size-18 text-white">Ilse R. Eaton</h5>
-                                                                <p class="mb-0 text-white-50">Manager</p>
+                                                                <p class="mb-0 text-white-50">Manager
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
         </div>
-    </div>
-
     <script src="{{ asset('backend/assets/libs/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/metismenu/metisMenu.min.js') }}"></script>
@@ -232,6 +234,32 @@
     <script src="{{ asset('backend/assets/libs/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/pace-js/pace.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/pages/pass-addon.init.js') }}"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        @if(Session::has('message'))
+        var type = "{{ Session::get('alert-type','info') }}"
+        switch (type) {
+            case 'info':
+                toastr.info(" {{ Session::get('message') }} ");
+                break;
+
+            case 'success':
+                toastr.success(" {{ Session::get('message') }} ");
+                break;
+
+            case 'warning':
+                toastr.warning(" {{ Session::get('message') }} ");
+                break;
+
+            case 'error':
+                toastr.error(" {{ Session::get('message') }} ");
+                break;
+        }
+        @endif
+    </script>
+
 
 </body>
 
