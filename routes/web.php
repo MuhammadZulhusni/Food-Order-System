@@ -54,6 +54,10 @@ Route::prefix('client')->group(function () {
     Route::middleware('client')->group(function(){
         Route::get('/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.dashboard');
         Route::get('/logout', [ClientController::class, 'ClientLogout'])->name('client.logout');
+        Route::get('/profile', [ClientController::class, 'ClientProfile'])->name('client.profile');
+        Route::post('/profile/store', [ClientController::class, 'ClientProfileStore'])->name('client.profile.store');
+        Route::get('/change/password', [ClientController::class, 'ClientChangePassword'])->name('client.change.password');
+        Route::post('/password/update', [ClientController::class, 'ClientPasswordUpdate'])->name('client.password.update');
     });
 });
 
