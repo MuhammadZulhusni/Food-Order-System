@@ -73,6 +73,11 @@ class ClientController extends Controller
 
     public function ClientDashboard(){
         // Display the client dashboard
-        return view('client.client_dashboard');
+        return view('client.index');
+    }
+
+    public function ClientLogout(){
+        Auth::guard('client')->logout();
+        return redirect()->route('client.login')->with('success','Logout Success');
     }
 }
