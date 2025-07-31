@@ -53,6 +53,7 @@ Route::prefix('client')->group(function () {
     // Protected client routes
     Route::middleware('client')->group(function(){
         Route::get('/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.dashboard');
+        Route::get('/logout', [ClientController::class, 'ClientLogout'])->name('client.logout');
     });
 });
 
