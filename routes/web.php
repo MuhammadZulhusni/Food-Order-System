@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
 
@@ -39,6 +40,16 @@ Route::prefix('admin')->group(function () {
         Route::post('/profile/store', [AdminController::class, 'AdminProfileStore'])->name('admin.profile.store');
         Route::get('/change/password', [AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
         Route::post('/admin/password/update', [AdminController::class, 'AdminPasswordUpdate'])->name('admin.password.update');
+
+        /// All Admin Category
+        Route::controller(CategoryController::class)->group(function(){
+            Route::get('/all/category', 'AllCategory')->name('all.category');
+            Route::get('/add/category', 'AddCategory')->name('add.category');
+            Route::post('/store/category', 'StoreCategory')->name('category.store');
+            Route::get('/edit/category/{id}', 'EditCategory')->name('edit.category');
+            Route::post('/update/category', 'UpdateCategory')->name('category.update');
+            Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
+        });
     });
 });
 
