@@ -1,5 +1,7 @@
 <div class="vertical-menu">
+
     <div data-simplebar class="h-100">
+
         <div id="sidebar-menu">
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" data-key="t-menu">Menu</li>
@@ -32,6 +34,20 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">City</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('all.city') }}">
+                                <span data-key="t-calendar">All City</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="users"></i>
                         <span data-key="t-authentication">Authentication</span>
                     </a>
@@ -40,6 +56,7 @@
                         <li><a href="auth-register.html" data-key="t-register">Register</a></li>
                     </ul>
                 </li>
+
 
                 <li class="menu-title mt-2" data-key="t-components">Elements</li>
 
@@ -64,11 +81,12 @@
                         <li><a href="extended-rangeslider.html" data-key="t-range-slider">Range Slider</a></li>
                     </ul>
                 </li>
+
             </ul>
 
             <div class="card sidebar-alert border-0 text-center mx-4 mb-0 mt-5">
                 <div class="card-body">
-                    <img src="assets/images/giftbox.png" alt="Giftbox">
+                    <img src="assets/images/giftbox.png" alt="Giftbox icon">
                     <div class="mt-4">
                         <h5 class="alertcard-title font-size-16">Unlimited Access</h5>
                         <p class="font-size-13">Upgrade your plan from a Free trial, to select ‘Business Plan’.</p>
