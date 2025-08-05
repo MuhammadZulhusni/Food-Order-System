@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Client\RestaurantController;
 
 Route::get('/', [UserController::class, 'Index'])->name('index');
 
@@ -70,14 +71,24 @@ Route::prefix('client')->group(function () {
     Route::post('/register/submit', [ClientController::class, 'ClientRegisterSubmit'])->name('client.register.submit');
     Route::post('/login_submit', [ClientController::class, 'ClientLoginSubmit'])->name('client.login_submit');
 
-    // Protected client routes
-    Route::middleware('client')->group(function(){
-        Route::get('/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.dashboard');
-        Route::get('/logout', [ClientController::class, 'ClientLogout'])->name('client.logout');
-        Route::get('/profile', [ClientController::class, 'ClientProfile'])->name('client.profile');
-        Route::post('/profile/store', [ClientController::class, 'ClientProfileStore'])->name('client.profile.store');
-        Route::get('/change/password', [ClientController::class, 'ClientChangePassword'])->name('client.change.password');
-        Route::post('/password/update', [ClientController::class, 'ClientPasswordUpdate'])->name('client.password.update');
+        // Protected client routes
+        Route::middleware('client')->group(function(){
+            Route::get('/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.dashboard');
+            Route::get('/logout', [ClientController::class, 'ClientLogout'])->name('client.logout');
+            Route::get('/profile', [ClientController::class, 'ClientProfile'])->name('client.profile');
+            Route::post('/profile/store', [ClientController::class, 'ClientProfileStore'])->name('client.profile.store');
+            Route::get('/change/password', [ClientController::class, 'ClientChangePassword'])->name('client.change.password');
+            Route::post('/password/update', [ClientController::class, 'ClientPasswordUpdate'])->name('client.password.update');
+
+        // RestaurantController routes
+        Route::controller(RestaurantController::class)->group(function(){
+            Route::get('/all/menu', 'AllMenu')->name('all.menu');
+            Route::get('/add/menu', 'AddMenu')->name('add.menu');
+            Route::post('/store/menu', 'StoreMenu')->name('menu.store');
+            Route::get('/edit/menu/{id}', 'EditMenu')->name('edit.menu');
+            Route::post('/update/menu', 'UpdateMenu')->name('menu.update');
+            Route::get('/delete/menu/{id}', 'DeleteMenu')->name('delete.menu');
+        });
     });
 });
 
