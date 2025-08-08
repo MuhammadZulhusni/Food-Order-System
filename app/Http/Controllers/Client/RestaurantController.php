@@ -338,4 +338,131 @@ class RestaurantController extends Controller
         $gallery = Gllery::latest()->get();
         return view('client.backend.gallery.all_gallery', compact('gallery'));
     }
+
+    /**
+     * Display the form for adding a new gallery item.
+     * @return \Illuminate\View\View
+     */
+    public function AddGallery(){ 
+        return view('client.backend.gallery.add_gallery' );
+    } 
+
+    /**
+     * Store new gallery images.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function StoreGallery(Request $request){
+
+        $images = $request->file('gallery_img');
+
+        // Loop through each uploaded image
+        foreach ($images as $gimg) {
+
+            // Use ImageManager to process and save the image
+            $manager = new ImageManager(new Driver());
+            $name_gen = hexdec(uniqid()).'.'.$gimg->getClientOriginalExtension();
+            $img = $manager->read($gimg);
+            $img->resize(500,500)->save(public_path('upload/gallery/'.$name_gen));
+            $save_url = 'upload/gallery/'.$name_gen;
+
+            // Insert a new record into the database
+            Gllery::insert([
+                'client_id' => Auth::guard('client')->id(),
+                'gallery_img' => $save_url,
+            ]); 
+        } // end foreach
+
+        $notification = array(
+            'message' => 'Gallery Inserted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.gallery')->with($notification);
+
+    }
+
+    /**
+     * Display the form for editing a specific gallery item.
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function EditGallery($id){
+        $gallery = Gllery::find($id);
+        return view('client.backend.gallery.edit_gallery',compact('gallery'));
+     }
+
+     /**
+      * Update an existing gallery item.
+      * @param  \Illuminate\Http\Request  $request
+      * @return \Illuminate\Http\RedirectResponse
+      */
+     public function UpdateGallery(Request $request){
+
+        $gallery_id = $request->id;
+
+        // Check if a new image file was uploaded
+        if ($request->hasFile('gallery_img')) {
+            $image = $request->file('gallery_img');
+            
+            // Process and save the new image
+            $manager = new ImageManager(new Driver());
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $img = $manager->read($image);
+            $img->resize(500,500)->save(public_path('upload/gallery/'.$name_gen));
+            $save_url = 'upload/gallery/'.$name_gen;
+
+            $gallery = Gllery::find($gallery_id);
+
+            // Delete the old image file
+            if ($gallery->gallery_img) {
+                $img = $gallery->gallery_img;
+                unlink($img);
+            }
+
+            // Update the database record with the new image URL
+            $gallery->update([
+                'gallery_img' => $save_url,
+            ]);
+ 
+            $notification = array(
+                'message' => 'Menu Updated Successfully',
+                'alert-type' => 'success'
+            );
+    
+            return redirect()->route('all.gallery')->with($notification);
+
+        } else {
+
+            $notification = array(
+                'message' => 'No Image Selected for Update',
+                'alert-type' => 'warning'
+            );
+    
+            return redirect()->back()->with($notification); 
+        } 
+    }
+
+    /**
+     * Delete a gallery item and its associated image file.
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function DeleteGallery($id){
+        $item = Gllery::find($id);
+        $img = $item->gallery_img;
+
+        // Delete the physical image file
+        unlink($img);
+
+        // Delete the database record
+        Gllery::find($id)->delete();
+
+        $notification = array(
+            'message' => 'Gallery Delete Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
 }
