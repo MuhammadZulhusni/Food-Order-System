@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManager;
-use App\Models\Category; // Unused import
+use App\Models\Category; 
 use Intervention\Image\Drivers\Gd\Driver;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Carbon\Carbon;
@@ -25,8 +25,8 @@ class RestaurantController extends Controller
      */
     public function AllMenu()
     {
-        // Retrieve all menu items, ordered by the latest created
-        $menu = Menu::latest()->get();
+        $id = Auth::guard('client')->id();
+        $menu = Menu::where('client_id',$id)->orderBy('id','desc')->get();
         return view('client.backend.menu.all_menu', compact('menu'));
     }
 
@@ -60,6 +60,7 @@ class RestaurantController extends Controller
             // Create a new menu item record in the database
             Menu::create([
                 'menu_name' => $request->menu_name,
+                'client_id' => Auth::guard('client')->id(),
                 'image' => $save_url,
             ]);
         }
@@ -153,7 +154,8 @@ class RestaurantController extends Controller
      */
     public function AllProduct()
     {
-        $product = Product::latest()->get();
+        $id = Auth::guard('client')->id();
+        $product = Product::where('client_id',$id)->orderBy('id','desc')->get();
         return view('client.backend.product.all_product', compact('product'));
     }
 
@@ -162,9 +164,10 @@ class RestaurantController extends Controller
      */
     public function AddProduct()
     {
+        $id = Auth::guard('client')->id();
         $category = Category::latest()->get();
         $city = City::latest()->get();
-        $menu = Menu::latest()->get();
+        $menu = Menu::where('client_id',$id)->latest()->get();
         return view('client.backend.product.add_product', compact('category', 'city', 'menu'));
     }
 
@@ -217,9 +220,10 @@ class RestaurantController extends Controller
      */
     public function EditProduct($id)
     {
+        $cid = Auth::guard('client')->id();
         $category = Category::latest()->get();
         $city = City::latest()->get();
-        $menu = Menu::latest()->get();
+        $menu = Menu::where('client_id',$cid)->latest()->get();
         $product = Product::find($id);
         return view('client.backend.product.edit_product', compact('category', 'city', 'menu', 'product'));
     }
@@ -335,7 +339,8 @@ class RestaurantController extends Controller
      */
     public function AllGallery()
     {
-        $gallery = Gllery::latest()->get();
+        $cid = Auth::guard('client')->id();
+        $gallery = Gllery::where('client_id',$cid)->latest()->get();
         return view('client.backend.gallery.all_gallery', compact('gallery'));
     }
 
