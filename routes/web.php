@@ -65,35 +65,47 @@ Route::prefix('admin')->group(function () {
 
 // Group for client routes with the '/client' prefix
 Route::prefix('client')->group(function () {
-    // Public client routes (no middleware)
-    Route::get('/login', [ClientController::class, 'ClientLogin'])->name('client.login');
-    Route::get('/register', [ClientController::class, 'ClientRegister'])->name('client.register');
-    Route::post('/register/submit', [ClientController::class, 'ClientRegisterSubmit'])->name('client.register.submit');
-    Route::post('/login_submit', [ClientController::class, 'ClientLoginSubmit'])->name('client.login_submit');
+            // Public client routes (no middleware)
+            Route::get('/login', [ClientController::class, 'ClientLogin'])->name('client.login');
+            Route::get('/register', [ClientController::class, 'ClientRegister'])->name('client.register');
+            Route::post('/register/submit', [ClientController::class, 'ClientRegisterSubmit'])->name('client.register.submit');
+            Route::post('/login_submit', [ClientController::class, 'ClientLoginSubmit'])->name('client.login_submit');
 
-        // Protected client routes
-        Route::middleware('client')->group(function(){
-            Route::get('/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.dashboard');
-            Route::get('/logout', [ClientController::class, 'ClientLogout'])->name('client.logout');
-            Route::get('/profile', [ClientController::class, 'ClientProfile'])->name('client.profile');
-            Route::post('/profile/store', [ClientController::class, 'ClientProfileStore'])->name('client.profile.store');
-            Route::get('/change/password', [ClientController::class, 'ClientChangePassword'])->name('client.change.password');
-            Route::post('/password/update', [ClientController::class, 'ClientPasswordUpdate'])->name('client.password.update');
+            // Protected client routes
+            Route::middleware('client')->group(function(){
+                Route::get('/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.dashboard');
+                Route::get('/logout', [ClientController::class, 'ClientLogout'])->name('client.logout');
+                Route::get('/profile', [ClientController::class, 'ClientProfile'])->name('client.profile');
+                Route::post('/profile/store', [ClientController::class, 'ClientProfileStore'])->name('client.profile.store');
+                Route::get('/change/password', [ClientController::class, 'ClientChangePassword'])->name('client.change.password');
+                Route::post('/password/update', [ClientController::class, 'ClientPasswordUpdate'])->name('client.password.update');
 
-        // RestaurantController routes
-        Route::controller(RestaurantController::class)->group(function(){
-            Route::get('/all/menu', 'AllMenu')->name('all.menu');
-            Route::get('/add/menu', 'AddMenu')->name('add.menu');
-            Route::post('/store/menu', 'StoreMenu')->name('menu.store');
-            Route::get('/edit/menu/{id}', 'EditMenu')->name('edit.menu');
-            Route::post('/update/menu', 'UpdateMenu')->name('menu.update');
-            Route::get('/delete/menu/{id}', 'DeleteMenu')->name('delete.menu');
+            // RestaurantController routes
+            Route::controller(RestaurantController::class)->group(function(){
+                Route::get('/all/menu', 'AllMenu')->name('all.menu');
+                Route::get('/add/menu', 'AddMenu')->name('add.menu');
+                Route::post('/store/menu', 'StoreMenu')->name('menu.store');
+                Route::get('/edit/menu/{id}', 'EditMenu')->name('edit.menu');
+                Route::post('/update/menu', 'UpdateMenu')->name('menu.update');
+                Route::get('/delete/menu/{id}', 'DeleteMenu')->name('delete.menu');
 
+            Route::controller(RestaurantController::class)->group(function(){
+                    Route::get('/all/product', 'AllProduct')->name('all.product');
+                    Route::get('/add/product', 'AddProduct')->name('add.product');
+                    Route::post('/store/product', 'StoreProduct')->name('product.store');
+                    Route::get('/edit/product/{id}', 'EditProduct')->name('edit.product');
+                    Route::post('/update/product', 'UpdateProduct')->name('product.update');
+                    Route::get('/delete/product/{id}', 'DeleteProduct')->name('delete.product');
+                    Route::get('/changeStatus', 'ChangeStatus')->name('change.status');
 
-        Route::controller(RestaurantController::class)->group(function(){
-                Route::get('/all/product', 'AllProduct')->name('all.product');
-                Route::get('/add/product', 'AddProduct')->name('add.product');
-                Route::post('/store/product', 'StoreProduct')->name('product.store');
+            Route::controller(RestaurantController::class)->group(function(){
+                    Route::get('/all/gallery', 'AllGallery')->name('all.gallery');
+                    Route::get('/add/gallery', 'AddGallery')->name('add.gallery');
+                    Route::post('/store/gallery', 'StoreGallery')->name('gallery.store');
+                    Route::get('/edit/gallery/{id}', 'EditGallery')->name('edit.gallery');
+                    Route::post('/update/gallery', 'UpdateGallery')->name('gallery.update');
+                    Route::get('/delete/gallery/{id}', 'DeleteGallery')->name('delete.gallery');
+                });
             });
         });
     });
