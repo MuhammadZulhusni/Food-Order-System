@@ -13,6 +13,10 @@ use App\Models\Category; // Unused import
 use Intervention\Image\Drivers\Gd\Driver;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Carbon\Carbon;
+use App\Models\Gllery;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
+
 
 class RestaurantController extends Controller
 {
@@ -144,57 +148,194 @@ class RestaurantController extends Controller
         return redirect()->back()->with($notification);
     }
 
-
-
-    public function AllProduct(){
+     /**
+     * Display a list of all products.
+     */
+    public function AllProduct()
+    {
         $product = Product::latest()->get();
         return view('client.backend.product.all_product', compact('product'));
-    } 
+    }
 
-     public function AddProduct(){
+    /**
+     * Show the form for creating a new product.
+     */
+    public function AddProduct()
+    {
         $category = Category::latest()->get();
         $city = City::latest()->get();
         $menu = Menu::latest()->get();
-        return view('client.backend.product.add_product', compact('category','city','menu'));
-    } 
+        return view('client.backend.product.add_product', compact('category', 'city', 'menu'));
+    }
 
-    public function StoreProduct(Request $request){
-
-        $pcode = IdGenerator::generate(['table' => 'products','field' => 'code', 'length' => 5, 'prefix' => 'PC']);  
+    /**
+     * Store a newly created product in storage.
+     */
+    public function StoreProduct(Request $request)
+    {
+        $pcode = IdGenerator::generate(['table' => 'products', 'field' => 'code', 'length' => 5, 'prefix' => 'PC']);
+        $save_url = null;
 
         if ($request->file('image')) {
             $image = $request->file('image');
             $manager = new ImageManager(new Driver());
-            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
             $img = $manager->read($image);
-            $img->resize(300,300)->save(public_path('upload/product/'.$name_gen));
-            $save_url = 'upload/product/'.$name_gen;
+            $img->resize(300, 300)->save(public_path('upload/product/' . $name_gen));
+            $save_url = 'upload/product/' . $name_gen;
+        }
 
-            Product::create([
+        Product::create([
+            'name' => $request->name,
+            'slug' => strtolower(str_replace(' ', '-', $request->name)),
+            'category_id' => $request->category_id,
+            'city_id' => $request->city_id,
+            'menu_id' => $request->menu_id,
+            'code' => $pcode,
+            'qty' => $request->qty,
+            'size' => $request->size,
+            'price' => $request->price,
+            'discount_price' => $request->discount_price,
+            'client_id' => Auth::guard('client')->id(),
+            'most_populer' => $request->most_populer,
+            'best_seller' => $request->best_seller,
+            'status' => 1,
+            'created_at' => Carbon::now(),
+            'image' => $save_url,
+        ]);
+
+        $notification = [
+            'message' => 'Product Inserted Successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('all.product')->with($notification);
+    }
+
+    /**
+     * Show the form for editing a product.
+     */
+    public function EditProduct($id)
+    {
+        $category = Category::latest()->get();
+        $city = City::latest()->get();
+        $menu = Menu::latest()->get();
+        $product = Product::find($id);
+        return view('client.backend.product.edit_product', compact('category', 'city', 'menu', 'product'));
+    }
+
+    /**
+     * Update the specified product in storage.
+     */
+    public function UpdateProduct(Request $request)
+    {
+        $pro_id = $request->id;
+        $product = Product::find($pro_id);
+
+        if ($request->file('image')) {
+            // Delete old image if it exists
+            if (File::exists(public_path($product->image))) {
+                File::delete(public_path($product->image));
+            }
+
+            // Upload and save new image
+            $image = $request->file('image');
+            $manager = new ImageManager(new Driver());
+            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            $img = $manager->read($image);
+            $img->resize(300, 300)->save(public_path('upload/product/' . $name_gen));
+            $save_url = 'upload/product/' . $name_gen;
+            
+            // Update product with new image
+            $product->update([
                 'name' => $request->name,
-                'slug' => strtolower(str_replace(' ','-',$request->name)),
+                'slug' => strtolower(str_replace(' ', '-', $request->name)),
                 'category_id' => $request->category_id,
                 'city_id' => $request->city_id,
                 'menu_id' => $request->menu_id,
-                'code' => $pcode,
                 'qty' => $request->qty,
                 'size' => $request->size,
                 'price' => $request->price,
                 'discount_price' => $request->discount_price,
-                'client_id' => Auth::guard('client')->id(),
                 'most_populer' => $request->most_populer,
                 'best_seller' => $request->best_seller,
-                'status' => 1,
-                'created_at' => Carbon::now(),
-                'image' => $save_url, 
-            ]); 
-        } 
+                'updated_at' => Carbon::now(),
+                'image' => $save_url,
+            ]);
+        } else {
+            // Update product without changing the image
+            $product->update([
+                'name' => $request->name,
+                'slug' => strtolower(str_replace(' ', '-', $request->name)),
+                'category_id' => $request->category_id,
+                'city_id' => $request->city_id,
+                'menu_id' => $request->menu_id,
+                'qty' => $request->qty,
+                'size' => $request->size,
+                'price' => $request->price,
+                'discount_price' => $request->discount_price,
+                'most_populer' => $request->most_populer,
+                'best_seller' => $request->best_seller,
+                'updated_at' => Carbon::now(),
+            ]);
+        }
 
-        $notification = array(
-            'message' => 'Product Inserted Successfully',
+        $notification = [
+            'message' => 'Product Updated Successfully',
             'alert-type' => 'success'
-        );
+        ];
 
         return redirect()->route('all.product')->with($notification);
+    }
+
+    /**
+     * Remove the specified product from storage.
+     */
+    public function DeleteProduct($id)
+    {
+        $item = Product::findOrFail($id);
+        
+        // Delete the image file if it exists
+        if (File::exists(public_path($item->image))) {
+            File::delete(public_path($item->image));
+        }
+
+        $item->delete();
+
+        $notification = [
+            'message' => 'Product Deleted Successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notification);
+    }
+
+    /**
+     * Handle AJAX request to change product status.
+     */
+    public function ChangeStatus(Request $request)
+    {
+        Log::info('Status change request:', $request->all());
+
+        $product = Product::find($request->product_id);
+
+        if (!$product) {
+            return response()->json(['error' => 'Product not found']);
+        }
+
+        $product->status = $request->status;
+        $product->updated_at = now();
+        $product->save();
+
+        return response()->json(['success' => 'Status Changed Successfully']);
+    }
+
+    /**
+     * Display a list of all gallery items.
+     */
+    public function AllGallery()
+    {
+        $gallery = Gllery::latest()->get();
+        return view('client.backend.gallery.all_gallery', compact('gallery'));
     }
 }

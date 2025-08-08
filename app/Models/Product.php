@@ -9,4 +9,12 @@ class Product extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    /**
+     * Define the relationship to the Menu model.
+     * A Product belongs to a single Menu.
+     */
+    public function menu(){
+        return $this->belongsTo(Menu::class, 'menu_id','id');
+    }
 }
