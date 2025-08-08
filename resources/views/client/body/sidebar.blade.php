@@ -1,9 +1,12 @@
 <div class="vertical-menu">
+
     <div data-simplebar class="h-100">
+
         <div id="sidebar-menu">
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" data-key="t-menu">Menu</li>
 
+                {{-- Dashboard Link --}}
                 <li>
                     <a href="index.html">
                         <i data-feather="home"></i>
@@ -11,6 +14,7 @@
                     </a>
                 </li>
 
+                {{-- Main Content Sections --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="grid"></i>
@@ -70,6 +74,26 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Coupon</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('all.coupon') }}">
+                                <span data-key="t-calendar">All Coupon</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('add.coupon') }}">
+                                <span data-key="t-chat">Add Coupon</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{-- User-related Section --}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="users"></i>
                         <span data-key="t-authentication">Authentication</span>
                     </a>
@@ -79,8 +103,8 @@
                     </ul>
                 </li>
 
+                {{-- UI Components Section --}}
                 <li class="menu-title mt-2" data-key="t-components">Elements</li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="briefcase"></i>
@@ -104,6 +128,7 @@
                 </li>
             </ul>
 
+            {{-- Sidebar Footer Card --}}
             <div class="card sidebar-alert border-0 text-center mx-4 mb-0 mt-5">
                 <div class="card-body">
                     <img src="assets/images/giftbox.png" alt="">
