@@ -15,6 +15,7 @@ use App\Models\Client;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Carbon\Carbon;
 use App\Models\Gllery; 
+use App\Models\Banner;
 
 class ManageController extends Controller
 {
@@ -256,5 +257,115 @@ class ManageController extends Controller
     public function ApproveRestaurant(){
         $client = Client::where('status',1)->get();
         return view('admin.backend.restaurant.approve_restaurant',compact('client')); 
+    }
+
+    // Display all banners
+    public function AllBanner(){
+        // Retrieve all banners from the database, ordered by the latest first
+        $banner = Banner::latest()->get();
+        return view('admin.backend.banner.all_banner',compact('banner'));
+    }
+
+    // Store a new banner
+    public function BannerStore(Request $request){
+        // Check if an image file was uploaded
+        if ($request->file('image')) {
+            $image = $request->file('image');
+            // Initialize the Image Manager with a Driver
+            $manager = new ImageManager(new Driver());
+            // Generate a unique name for the image file
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            // Read the image, resize it to 400x400, and save it to the specified public path
+            $img = $manager->read($image);
+            $img->resize(400,400)->save(public_path('upload/banner/'.$name_gen));
+            // Construct the URL path to the saved image
+            $save_url = 'upload/banner/'.$name_gen;
+
+            // Create a new banner record in the database with the provided URL and image path
+            Banner::create([
+                'url' => $request->url,
+                'image' => $save_url, 
+            ]); 
+        } 
+
+        $notification = array(
+            'message' => 'Banner Inserted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    // Retrieve a specific banner for editing
+    public function EditBanner($id){
+        $banner = Banner::find($id);
+        // If the banner is found, construct its full public asset URL
+        if ($banner) {
+            $banner->image = asset($banner->image);
+        }
+        // Return the banner data as a JSON response
+        return response()->json($banner);
+    }
+
+    // Update an existing banner
+    public function BannerUpdate(Request $request){
+        $banner_id = $request->banner_id;
+
+        // Check if a new image file was uploaded
+        if ($request->file('image')) {
+            $image = $request->file('image');
+            // Initialize the Image Manager
+            $manager = new ImageManager(new Driver());
+            // Generate a new unique name for the image
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            // Read the image, resize it, and save it
+            $img = $manager->read($image);
+            $img->resize(400,400)->save(public_path('upload/banner/'.$name_gen));
+            $save_url = 'upload/banner/'.$name_gen;
+
+            // Find and update the banner record with the new URL and image path
+            Banner::find($banner_id)->update([
+                'url' => $request->url,
+                'image' => $save_url, 
+            ]); 
+            
+            $notification = array(
+                'message' => 'Banner Updated Successfully',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.banner')->with($notification);
+        } else {
+            // If no new image was uploaded, update only the URL
+            Banner::find($banner_id)->update([
+                'url' => $request->url, 
+            ]); 
+
+            $notification = array(
+                'message' => 'Banner Updated Successfully',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.banner')->with($notification);
+        }
+    }
+
+    // Delete a banner
+    public function DeleteBanner($id){
+        // Find the banner by its ID
+        $item = Banner::find($id);
+        // Get the image path
+        $img = $item->image;
+        // Delete the image file from the server
+        unlink($img);
+
+        // Delete the banner record from the database
+        Banner::find($id)->delete();
+
+        // Prepare a success notification for the deletion
+        $notification = array(
+            'message' => 'Banner Delete Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
 }
