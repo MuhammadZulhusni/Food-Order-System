@@ -1,26 +1,23 @@
+@php
+   // Fetch the 4 most recent banner records from the database
+   $banner = App\Models\Banner::latest()->limit(4)->get();
+@endphp
+
 <section class="section pt-5 pb-5 bg-white homepage-add-section">
     <div class="container">
        <div class="row">
-          <div class="col-md-3 col-6">
+         {{-- Loop through each banner record --}}
+         @foreach ($banner  as $item) 
+         
+         <div class="col-md-3 col-6">
              <div class="products-box">
-                <a href="listing.html"><img alt="" src="{{ asset('frontend/img/pro1.jpg') }}" class="img-fluid rounded"></a>
+                {{-- Create a clickable link with the banner image --}}
+                <a href="{{ $item->url }}"><img alt="" src="{{ asset($item->image) }}" class="img-fluid rounded"></a>
              </div>
           </div>
-          <div class="col-md-3 col-6">
-             <div class="products-box">
-                <a href="listing.html"><img alt="" src="{{ asset('frontend/img/pro2.jpg') }}" class="img-fluid rounded"></a>
-             </div>
-          </div>
-          <div class="col-md-3 col-6">
-             <div class="products-box">
-                <a href="listing.html"><img alt="" src="{{ asset('frontend/img/pro3.jpg') }}" class="img-fluid rounded"></a>
-             </div>
-          </div>
-          <div class="col-md-3 col-6">
-             <div class="products-box">
-                <a href="listing.html"><img alt="" src="{{ asset('frontend/img/pro4.jpg') }}" class="img-fluid rounded"></a>
-             </div>
-          </div>
+          @endforeach
+          
+           
        </div>
     </div>
  </section>
