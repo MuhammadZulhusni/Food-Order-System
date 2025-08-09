@@ -2,13 +2,11 @@
 
     <div data-simplebar class="h-100">
 
-        <!--- Sidemenu -->
         <div id="sidebar-menu">
-            <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
+
                 <li class="menu-title" data-key="t-menu">Menu</li>
 
-                {{-- Dashboard Link --}}
                 <li>
                     <a href="index.html">
                         <i data-feather="home"></i>
@@ -16,7 +14,6 @@
                     </a>
                 </li>
 
-                {{-- Category Management --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="grid"></i>
@@ -36,7 +33,6 @@
                     </ul>
                 </li>
 
-                {{-- City Management --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="grid"></i>
@@ -51,7 +47,6 @@
                     </ul>
                 </li>
 
-                {{-- Product Management --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="grid"></i>
@@ -70,23 +65,28 @@
                         </li>
                     </ul>
                 </li>
-
-                {{-- Authentication --}}
+                
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="users"></i>
-                        <span data-key="t-authentication">Authentication</span>
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Manage Restaurant</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="auth-login.html" data-key="t-login">Login</a></li>
-                        <li><a href="auth-register.html" data-key="t-register">Register</a></li>
+                        <li>
+                            <a href="{{ route('pending.restaurant') }}">
+                                <span data-key="t-calendar">Pending Restaurant </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('approve.restaurant') }}">
+                                <span data-key="t-chat">Approve Restaurant</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
-
                 <li class="menu-title mt-2" data-key="t-components">Elements</li>
 
-                {{-- Components --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="briefcase"></i>
@@ -98,7 +98,6 @@
                     </ul>
                 </li>
 
-                {{-- Extended UI --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="gift"></i>
@@ -109,7 +108,6 @@
                         <li><a href="extended-rangeslider.html" data-key="t-range-slider">Range Slider</a></li>
                     </ul>
                 </li>
-
             </ul>
 
             <div class="card sidebar-alert border-0 text-center mx-4 mb-0 mt-5">
@@ -122,6 +120,5 @@
                 </div>
             </div>
         </div>
-        <!-- Sidebar -->
-    </div>
+        </div>
 </div>

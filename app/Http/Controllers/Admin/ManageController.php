@@ -222,4 +222,39 @@ class ManageController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
+
+    // FOR ALL Pending and Approve Restaurant method 
+    /**
+     * Display a list of pending restaurants (clients with status 0).
+     *
+     * @return \Illuminate\View\View
+     */
+    public function PendingRestaurant(){
+        $client = Client::where('status',0)->get();
+        return view('admin.backend.restaurant.pending_restaurant',compact('client')); 
+    }
+
+    /**
+     * Change the status of a client (restaurant) via an AJAX request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ClientChangeStatus(Request $request){
+        $client = Client::find($request->client_id);
+        $client->status = $request->status;
+        $client->save();
+        return response()->json(['success' => 'Status Change Successfully']);
+    }
+
+    /**
+     * Display a list of approved restaurants (clients with status 1).
+     *
+     * @return \Illuminate\View\View
+     */
+    public function ApproveRestaurant(){
+        $client = Client::where('status',1)->get();
+        return view('admin.backend.restaurant.approve_restaurant',compact('client')); 
+    }
 }

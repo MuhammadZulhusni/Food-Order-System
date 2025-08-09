@@ -93,6 +93,12 @@ Route::prefix('admin')->group(function () {
             Route::post('/admin/update/product', 'AdminUpdateProduct')->name('admin.product.update');
             Route::get('/admin/delete/product/{id}', 'AdminDeleteProduct')->name('admin.delete.product');
         });
+
+        Route::controller(ManageController::class)->group(function(){
+            Route::get('/pending/restaurant', 'PendingRestaurant')->name('pending.restaurant'); 
+            Route::get('/clientchangeStatus', 'ClientChangeStatus'); 
+            Route::get('/approve/restaurant', 'ApproveRestaurant')->name('approve.restaurant'); 
+        });
     });
 });
 
@@ -108,7 +114,7 @@ Route::prefix('client')->group(function () {
     Route::post('/login_submit', [ClientController::class, 'ClientLoginSubmit'])->name('client.login_submit');
 
     // PROTECTED CLIENT ROUTES (requires 'client' middleware)
-    Route::middleware('client')->group(function(){
+    Route::middleware(['client','status'])->group(function(){
         // Client Dashboard and Profile Routes
         Route::get('/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.dashboard');
         Route::get('/logout', [ClientController::class, 'ClientLogout'])->name('client.logout');
