@@ -1,5 +1,5 @@
-@extends('client.client_dashboard')
-@section('client')
+@extends('admin.admin_dashboard')
+@section('admin')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
@@ -14,7 +14,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <a href="{{ route('add.product') }}" class="btn btn-primary waves-effect waves-light">Add Product</a>
+                            <a href="{{ route('admin.add.product') }}" class="btn btn-primary waves-effect waves-light">Add Product</a>
                         </ol>
                     </div>
 
@@ -35,7 +35,7 @@
                 <th>Sl</th>
                 <th>Image</th>
                 <th>Name</th>
-                <th>Menu</th>
+                <th>Restaurant</th>
                 <th>QTY</th>                
                 <th>Price</th>
                 <th>Discount</th>
@@ -51,7 +51,7 @@
                 <td>{{ $key+1 }}</td>
                 <td><img src="{{ asset($item->image) }}" alt="" style="width: 70px; height:40px;"></td>
                 <td>{{ $item->name }}</td>
-                <td>{{ $item['menu']['menu_name'] }}</td>
+                <td>{{ $item['client']['name'] }}</td>
                 <td>{{ $item->qty }}</td>
                 <td>{{ $item->price }}</td>                
                 <td>
@@ -72,8 +72,8 @@
                     @endif
                 </td>
                 
-        <td><a href="{{ route('edit.product',$item->id) }}" class="btn btn-info waves-effect waves-light"> <i class="fas fa-edit"></i> </a>
-        <a href="{{ route('delete.product',$item->id) }}" class="btn btn-danger waves-effect waves-light" id="delete"><i class="fas fa-trash"></i></a>
+        <td><a href="{{ route('admin.edit.product',$item->id) }}" class="btn btn-info waves-effect waves-light"> <i class="fas fa-edit"></i> </a>
+        <a href="{{ route('admin.delete.product',$item->id) }}" class="btn btn-danger waves-effect waves-light" id="delete"><i class="fas fa-trash"></i></a>
         <input data-id="{{$item->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $item->status ? 'checked' : '' }}>
 
                 </td> 
@@ -129,12 +129,15 @@
                       title: data.error, 
                       })
                   }
+  
+                // End Message   
+  
+  
               }
           });
       })
     })
   </script>
-   
    
 
 

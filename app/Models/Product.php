@@ -17,4 +17,11 @@ class Product extends Model
     public function menu(){
         return $this->belongsTo(Menu::class, 'menu_id','id');
     }
+
+    /**
+     * Get the client that owns the product.
+     */
+    public function client(){
+        return $this->belongsTo(Client::class, 'client_id','id');
+    }
 }

@@ -4,6 +4,7 @@
 
         <div id="sidebar-menu">
             <ul class="metismenu list-unstyled" id="side-menu">
+
                 <li class="menu-title" data-key="t-menu">Menu</li>
 
                 <li>
@@ -48,15 +49,55 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="users"></i>
-                        <span data-key="t-authentication">Authentication</span>
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Manage Product</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="auth-login.html" data-key="t-login">Login</a></li>
-                        <li><a href="auth-register.html" data-key="t-register">Register</a></li>
+                        <li>
+                            <a href="{{ route('admin.all.product') }}">
+                                <span data-key="t-calendar">All Product</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.add.product') }}">
+                                <span data-key="t-chat">Add Product</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Manage Restaurant</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('pending.restaurant') }}">
+                                <span data-key="t-calendar">Pending Restaurant </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('approve.restaurant') }}">
+                                <span data-key="t-chat">Approve Restaurant</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Manage Banner</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('all.banner') }}">
+                                <span data-key="t-calendar">All Banner </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <li class="menu-title mt-2" data-key="t-components">Elements</li>
 
@@ -81,12 +122,11 @@
                         <li><a href="extended-rangeslider.html" data-key="t-range-slider">Range Slider</a></li>
                     </ul>
                 </li>
-
             </ul>
 
             <div class="card sidebar-alert border-0 text-center mx-4 mb-0 mt-5">
                 <div class="card-body">
-                    <img src="assets/images/giftbox.png" alt="Giftbox icon">
+                    <img src="assets/images/giftbox.png" alt="Giftbox">
                     <div class="mt-4">
                         <h5 class="alertcard-title font-size-16">Unlimited Access</h5>
                         <p class="font-size-13">Upgrade your plan from a Free trial, to select ‘Business Plan’.</p>
