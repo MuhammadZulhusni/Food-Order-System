@@ -315,23 +315,13 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Handle AJAX request to change product status.
+     * change product status.
      */
-    public function ChangeStatus(Request $request)
-    {
-        Log::info('Status change request:', $request->all());
-
+    public function ChangeStatus(Request $request){
         $product = Product::find($request->product_id);
-
-        if (!$product) {
-            return response()->json(['error' => 'Product not found']);
-        }
-
         $product->status = $request->status;
-        $product->updated_at = now();
         $product->save();
-
-        return response()->json(['success' => 'Status Changed Successfully']);
+        return response()->json(['success' => 'Status Change Successfully']);
     }
 
     /**

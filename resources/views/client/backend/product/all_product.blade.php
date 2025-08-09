@@ -101,7 +101,7 @@
           $.ajax({
               type: "GET",
               dataType: "json",
-              url: '{{ route("change.status") }}',
+              url: '/changeStatus',
               data: {'status': status, 'product_id': product_id},
               success: function(data){
                 // console.log(data.success)
@@ -129,15 +129,12 @@
                       title: data.error, 
                       })
                   }
-  
-                // End Message   
-  
-  
               }
           });
       })
     })
   </script>
+   
    
 
 

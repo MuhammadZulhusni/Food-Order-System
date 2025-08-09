@@ -13,24 +13,16 @@ use App\Http\Controllers\UserController;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 // =========================================================================
 // PUBLIC ROUTES
-// These are routes that can be accessed without any authentication.
 // =========================================================================
 Route::get('/', [UserController::class, 'Index'])->name('index');
-Route::get('/changeStatus', [RestaurantController::class, 'ChangeStatus'])->name('change.status');
+Route::get('/changeStatus', [RestaurantController::class, 'ChangeStatus']);
 
 // =========================================================================
 // AUTHENTICATION ROUTES
-// These routes handle user authentication and are typically provided by
-// the Laravel Breeze or Jetstream package.
 // =========================================================================
 require __DIR__.'/auth.php';
 
@@ -39,10 +31,8 @@ Route::get('/dashboard', function () {
     return view('frontend.dashboard.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
 // =========================================================================
 // AUTHENTICATED USER ROUTES
-// These routes require the user to be logged in.
 // =========================================================================
 Route::middleware('auth')->group(function () {
     // User Profile Routes
@@ -57,10 +47,9 @@ Route::middleware('auth')->group(function () {
 
 // =========================================================================
 // ADMIN ROUTES
-// All routes under the '/admin' prefix.
 // =========================================================================
 Route::prefix('admin')->group(function () {
-    // PUBLIC ADMIN ROUTES (accessible to all)
+    // PUBLIC ADMIN ROUTES
     Route::get('/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
     Route::post('/login_submit', [AdminController::class, 'AdminLoginSubmit'])->name('admin.login_submit');
     Route::get('/forget_password', [AdminController::class, 'AdminForgetPassword'])->name('admin.forget_password');
@@ -110,10 +99,9 @@ Route::prefix('admin')->group(function () {
 
 // =========================================================================
 // CLIENT ROUTES
-// All routes under the '/client' prefix.
 // =========================================================================
 Route::prefix('client')->group(function () {
-    // PUBLIC CLIENT ROUTES (accessible to all)
+    // PUBLIC CLIENT ROUTES
     Route::get('/login', [ClientController::class, 'ClientLogin'])->name('client.login');
     Route::get('/register', [ClientController::class, 'ClientRegister'])->name('client.register');
     Route::post('/register/submit', [ClientController::class, 'ClientRegisterSubmit'])->name('client.register.submit');
@@ -164,3 +152,4 @@ Route::prefix('client')->group(function () {
         });
     });
 });
+
