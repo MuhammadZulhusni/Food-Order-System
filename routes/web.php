@@ -8,6 +8,7 @@ use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Client\RestaurantController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Frontend\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -167,3 +168,7 @@ Route::prefix('client')->group(function () {
     });
 });
 
+ Route::controller(HomeController::class)->group(function(){
+    Route::get('/restaurant/details/{id}', 'RestaurantDetails')->name('res.details'); 
+    
+});
