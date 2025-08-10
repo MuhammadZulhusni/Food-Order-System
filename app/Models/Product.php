@@ -24,4 +24,11 @@ class Product extends Model
     public function client(){
         return $this->belongsTo(Client::class, 'client_id','id');
     }
+
+    /** Establishes a one-to-one relationship with the City model.
+    * The foreign key 'city_id' on this model links to the 'id' on the City model.
+    */
+    public function city(){
+        return $this->belongsTo(City::class, 'city_id','id');
+    }
 }

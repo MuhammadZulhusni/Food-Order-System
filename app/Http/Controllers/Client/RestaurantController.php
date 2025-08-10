@@ -135,7 +135,7 @@ class RestaurantController extends Controller
         $img = $item->image;
         // Delete the image file from the server
         if (file_exists($img)) {
-            unlink($img);
+            unlink(public_path($img));
         }
 
         // Delete the menu item record from the database
@@ -358,7 +358,7 @@ class RestaurantController extends Controller
             $manager = new ImageManager(new Driver());
             $name_gen = hexdec(uniqid()).'.'.$gimg->getClientOriginalExtension();
             $img = $manager->read($gimg);
-            $img->resize(500,500)->save(public_path('upload/gallery/'.$name_gen));
+            $img->resize(800,800)->save(public_path('upload/gallery/'.$name_gen));
             $save_url = 'upload/gallery/'.$name_gen;
 
             // Insert a new record into the database
@@ -404,7 +404,7 @@ class RestaurantController extends Controller
             $manager = new ImageManager(new Driver());
             $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
             $img = $manager->read($image);
-            $img->resize(500,500)->save(public_path('upload/gallery/'.$name_gen));
+            $img->resize(800,800)->save(public_path('upload/gallery/'.$name_gen));
             $save_url = 'upload/gallery/'.$name_gen;
 
             $gallery = Gllery::find($gallery_id);
