@@ -29,7 +29,7 @@ require __DIR__.'/auth.php';
 
 // A general dashboard accessible to any authenticated user.
 Route::get('/dashboard', function () {
-    return view('frontend.dashboard.dashboard');
+    return view('frontend.dashboard.profile');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // =========================================================================
