@@ -1,4 +1,5 @@
-@include('frontend.dashboard.header')
+@extends('frontend.dashboard.dashboard')
+@section('dashboard')
 
 @php
     // Fetch and prepare data for the view
@@ -505,4 +506,4 @@
     </div>
 </section>
 
-@include('frontend.dashboard.footer')
+@endsection
