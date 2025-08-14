@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth; 
 use App\Models\Product;
 use Illuminate\Support\Facades\Session; 
+use App\Models\Coupon;
 
 class CartController extends Controller
 {
@@ -18,6 +19,10 @@ class CartController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function AddToCart($id){
+
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+        }
 
         $products = Product::find($id);
 
@@ -96,5 +101,84 @@ class CartController extends Controller
             'message' => 'Cart Remove Successfully',
             'alert-type' => 'success'
         ]);
+    }
+
+    /**
+     * Applies a coupon to the user's cart.
+     *
+     * This function validates a coupon, ensures it's valid for the products in the cart,
+     * and then stores the coupon details in the session. It handles various error
+     * conditions such as invalid coupons or coupons not applicable to the cart's items.
+     *
+     * @param Request $request The incoming HTTP request.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ApplyCoupon(Request $request){
+        // 1. Validate the coupon
+        $coupon = Coupon::where('coupon_name',$request->coupon_name)->where('validity','>=',Carbon::now()->format('Y-m-d'))->first();
+
+        // 2. Get cart data and initialize variables
+        $cart = session()->get('cart',[]);
+        $totalAmount = 0;
+        $clientIds = [];
+
+        // 3. Loop through cart items to calculate total and get client IDs
+        foreach($cart as $car){
+            $totalAmount += ($car['price'] * $car['quantity']);
+            $pd = Product::find($car['id']);
+            $cdid = $pd->client_id;
+            array_push($clientIds,$cdid);
+        }
+
+        // 4. Check if a valid coupon was found
+        if ($coupon) {
+        // 5. Check if all products in the cart are from a single client/restaurant
+        if (count(array_unique($clientIds)) === 1) {
+            $cvendorId = $coupon->client_id;
+
+            // 6. Check if the coupon's client ID matches the cart's client ID
+            if ($cvendorId == $clientIds[0]) {
+                // 7. Store valid coupon details in the session
+                Session::put('coupon',[
+                    'coupon_name' => $coupon->coupon_name,
+                    'discount' => $coupon->discount,
+                    'discount_amount' => $totalAmount - ($totalAmount * $coupon->discount/100),
+                ]);
+                $couponData = Session()->get('coupon');
+
+                // 8. Return a success response
+                return response()->json(array(
+                    'validity' => true,
+                    'success' => 'Coupon Applied Successfully',
+                    'couponData' => $couponData,
+                ));
+            }else{
+                // 9. Return an error for a mismatch between coupon and restaurant
+                return response()->json(['error' => 'This Coupon Not Valid for this Restrurant']);
+            } 
+
+        }else{
+            // 10. Return an error if the cart contains products from multiple restaurants
+            return response()->json(['error' => 'This Coupon for one of the selected Restrurant']);
+        }
+        }else {
+            // 11. Return an error for an invalid coupon
+            return response()->json(['error' => 'Invalid Coupon']);
+        }
+    }
+
+    /**
+     * Removes the active coupon from the user's session.
+     *
+     * This function simply clears the 'coupon' data from the session.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function CouponRemove(){
+        // 12. Remove the coupon from the session
+        Session::forget('coupon');
+        
+        // 13. Return a success response
+        return response()->json(['success' => 'Coupon Remove Successfully']);
     }
 }
