@@ -182,18 +182,27 @@ class CartController extends Controller
         return response()->json(['success' => 'Coupon Remove Successfully']);
     }
 
+    /**
+     * Redirects the user to the checkout page if they are authenticated and their cart is not empty.
+     * Otherwise, it handles redirection and displays appropriate notifications.
+     */
     public function ShopCheckout(){
+        // Check if the user is authenticated
         if (Auth::check()) {
+            // Retrieve cart items from the session
             $cart = session()->get('cart',[]);
             $totalAmount = 0;
+            
+            // Calculate the total amount of items in the cart
             foreach ($cart as $car) {
                 $totalAmount += $car['price'];
             }
 
+            // If the total amount is greater than zero, proceed to the checkout view
             if ($totalAmount > 0) {
-               return view('frontend.checkout.view_checkout', compact('cart'));
+            return view('frontend.checkout.view_checkout', compact('cart'));
             } else {
-
+                // If the cart is empty, redirect to the homepage with an error notification
                 $notification = array(
                     'message' => 'Shopping at list one item',
                     'alert-type' => 'error'
@@ -201,13 +210,13 @@ class CartController extends Controller
                 return redirect()->to('/')->with($notification);
             } 
             
-        }else{
-
+        } else {
+            // If the user is not authenticated, redirect them to the login page with a notification
             $notification = array(
                 'message' => 'Please Login First',
                 'alert-type' => 'success'
             );
-    
+
             return redirect()->route('login')->with($notification); 
         } 
     }
