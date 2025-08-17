@@ -7,6 +7,7 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ManageOrderController extends Controller
 {
@@ -124,11 +125,12 @@ class ManageOrderController extends Controller
      * for a given order ID, calculates the total price, and passes the data to the view.
      */
     public function ClientOrderDetails($id){
+        $cid = Auth::guard('client')->id();
         // Retrieve the order details along with the user information.
         $order = Order::with('user')->where('id',$id)->first();
         
         // Retrieve all order items for the given order ID.
-        $orderItem = OrderItem::with('product')->where('order_id',$id)->orderBy('id','desc')->get();
+        $orderItem = OrderItem::with('product')->where('order_id',$id)->where('client_id',$cid)->orderBy('id','desc')->get();
 
         // Calculate the total price of all items in the order.
         $totalPrice = 0;
@@ -177,4 +179,36 @@ class ManageOrderController extends Controller
 
         return view('frontend.dashboard.order.order_details',compact('order','orderItem','totalPrice'));
     }
+
+/**
+ * Generates and downloads a PDF invoice for a specific user order.
+ *
+ * This function retrieves the order and its items, calculates the total price,
+ * loads a view with this data, and then generates a PDF for download.
+ *
+ * @param int $id The ID of the order to generate the invoice for.
+ * @return \Illuminate\Http\Response The PDF file for download.
+ */
+public function UserInvoiceDownload($id){
+    // Retrieve the specific order and its associated user, ensuring it belongs to the authenticated user.
+    $order = Order::with('user')->where('id',$id)->where('user_id',Auth::id())->first();
+    
+    // Retrieve all order items for the given order, along with product details.
+    $orderItem = OrderItem::with('product')->where('order_id',$id)->orderBy('id','desc')->get();
+
+    // Calculate the total price of all items in the order.
+    $totalPrice = 0;
+    foreach($orderItem as $item){
+        $totalPrice += $item->price * $item->qty;
+    }
+
+    // Load the invoice view into a PDF instance, set paper options, and enable file system access.
+    $pdf = Pdf::loadView('frontend.dashboard.order.invoice_download',compact('order','orderItem','totalPrice'))->setPaper('a4')->setOption([
+        'tempDir' => public_path(),
+        'chroot' => public_path(),
+    ]);
+    
+    // Download the generated PDF with the filename 'invoice.pdf'.
+    return $pdf->download('invoice.pdf');        
+}
 }
