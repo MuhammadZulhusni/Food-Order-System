@@ -1,16 +1,15 @@
 @php
-    // Retrieve the authenticated client's ID and details
     $id = Auth::guard('client')->id();
     $client = App\Models\Client::find($id);
     $status = $client->status;
 @endphp
 
 <div class="vertical-menu">
+
     <div data-simplebar class="h-100">
 
         <div id="sidebar-menu">
             <ul class="metismenu list-unstyled" id="side-menu">
-
                 <li class="menu-title" data-key="t-menu">Menu</li>
 
                 <li>
@@ -37,7 +36,7 @@
                             <a href="{{ route('add.menu') }}">
                                 <span data-key="t-chat">Add Menu</span>
                             </a>
-                        </li>
+                        </li> 
                     </ul>
                 </li>
 
@@ -56,7 +55,7 @@
                             <a href="{{ route('add.product') }}">
                                 <span data-key="t-chat">Add Product</span>
                             </a>
-                        </li>
+                        </li> 
                     </ul>
                 </li>
 
@@ -75,7 +74,7 @@
                             <a href="{{ route('add.gallery') }}">
                                 <span data-key="t-chat">Add Gallery</span>
                             </a>
-                        </li>
+                        </li> 
                     </ul>
                 </li>
 
@@ -94,16 +93,31 @@
                             <a href="{{ route('add.coupon') }}">
                                 <span data-key="t-chat">Add Coupon</span>
                             </a>
-                        </li>
+                        </li> 
                     </ul>
                 </li>
-                
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Manage Orders</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('all.client.orders') }}">
+                                <span data-key="t-calendar">All Orders</span>
+                            </a>
+                        </li> 
+                    </ul>
+                </li>
+
                 @endif
+
             </ul>
 
             <div class="card sidebar-alert border-0 text-center mx-4 mb-0 mt-5">
                 <div class="card-body">
-                    <img src="assets/images/giftbox.png" alt="Giftbox">
+                    <img src="assets/images/giftbox.png" alt="">
                     <div class="mt-4">
                         <h5 class="alertcard-title font-size-16">Unlimited Access</h5>
                         <p class="font-size-13">Upgrade your plan from a Free trial, to select ‘Business Plan’.</p>

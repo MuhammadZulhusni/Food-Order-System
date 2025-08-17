@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ManageOrderController extends Controller
 {
@@ -93,5 +94,48 @@ class ManageOrderController extends Controller
         );
 
         return redirect()->route('deliverd.order')->with($notification);
+    }
+
+    /**
+     * Displays all orders for the authenticated client.
+     *
+     * This function retrieves all order items associated with the logged-in client,
+     * groups them by their order ID, and passes the grouped data to the view.
+     */
+    public function AllClientOrders(){
+        // Get the authenticated client's ID.
+        $clientId = Auth::guard('client')->id();
+
+        // Retrieve order items, group them by order ID, and sort by descending order ID.
+        $orderItemGroupData = OrderItem::with(['product','order'])
+            ->where('client_id',$clientId)
+            ->orderBy('order_id','desc')
+            ->get()
+            ->groupBy('order_id');
+            
+        return view('client.backend.order.all_orders',compact('orderItemGroupData'));
+    }
+
+
+    /**
+     * Displays the details of a specific order for the client.
+     *
+     * This function retrieves the main order details and all associated order items
+     * for a given order ID, calculates the total price, and passes the data to the view.
+     */
+    public function ClientOrderDetails($id){
+        // Retrieve the order details along with the user information.
+        $order = Order::with('user')->where('id',$id)->first();
+        
+        // Retrieve all order items for the given order ID.
+        $orderItem = OrderItem::with('product')->where('order_id',$id)->orderBy('id','desc')->get();
+
+        // Calculate the total price of all items in the order.
+        $totalPrice = 0;
+        foreach($orderItem as $item){
+            $totalPrice += $item->price * $item->qty;
+        }
+
+        return view('client.backend.order.client_order_details',compact('order','orderItem','totalPrice'));
     }
 }
