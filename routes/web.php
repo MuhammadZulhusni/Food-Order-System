@@ -211,3 +211,8 @@ Route::controller(ManageOrderController::class)->group(function(){
     Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders'); 
     Route::get('/client/order/details/{id}', 'ClientOrderDetails')->name('client.order.details'); 
 });
+
+Route::controller(ManageOrderController::class)->group(function(){
+    Route::get('/user/order/list', 'UserOrderList')->name('user.order.list'); 
+    Route::get('/user/order/details/{id}', 'UserOrderDetails')->name('user.order.details'); 
+});

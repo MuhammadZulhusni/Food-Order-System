@@ -138,4 +138,43 @@ class ManageOrderController extends Controller
 
         return view('client.backend.order.client_order_details',compact('order','orderItem','totalPrice'));
     }
+
+    /**
+     * Displays a list of all orders for the authenticated user.
+     *
+     * This function retrieves all orders associated with the logged-in user,
+     * sorts them by ID in descending order, and passes the data to the view.
+     */
+    public function UserOrderList(){
+        // Get the ID of the currently authenticated user.
+        $userId = Auth::user()->id;
+        
+        // Retrieve all orders for the user, ordered by most recent.
+        $allUserOrder = Order::where('user_id',$userId)->orderBy('id','desc')->get();
+        
+        return view('frontend.dashboard.order.order_list',compact('allUserOrder'));
+    }
+
+    /**
+     * Displays the details of a specific order for the user.
+     *
+     * This function retrieves the main order details and all associated order items
+     * for a given order ID, ensuring the order belongs to the authenticated user.
+     * It also calculates the total price and passes the data to the view.
+     */
+    public function UserOrderDetails($id){
+        // Retrieve the specific order, including user details, and ensure it belongs to the logged-in user.
+        $order = Order::with('user')->where('id',$id)->where('user_id',Auth::id())->first();
+        
+        // Retrieve all items for the specific order.
+        $orderItem = OrderItem::with('product')->where('order_id',$id)->orderBy('id','desc')->get();
+
+        // Calculate the total price of all items in the order.
+        $totalPrice = 0;
+        foreach($orderItem as $item){
+            $totalPrice += $item->price * $item->qty;
+        }
+
+        return view('frontend.dashboard.order.order_details',compact('order','orderItem','totalPrice'));
+    }
 }
