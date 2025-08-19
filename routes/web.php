@@ -244,3 +244,7 @@ Route::controller(ReviewController::class)->group(function(){
     Route::get('/admin/approve/review', 'AdminApproveReview')->name('admin.approve.review'); 
     Route::get('/reviewchangeStatus', 'ReviewChangeStatus');  
 });
+
+Route::controller(ReviewController::class)->group(function(){
+    Route::get('/client/all/reviews', 'ClientAllReviews')->name('client.all.reviews'); 
+});

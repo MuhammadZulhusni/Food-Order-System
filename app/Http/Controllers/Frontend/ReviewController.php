@@ -76,4 +76,18 @@ class ReviewController extends Controller
         $review->save();
         return response()->json(['success' => 'Status Change Successfully']);
     }
+
+    /**
+     * Retrieves all approved reviews for the authenticated client and displays them.
+     */
+    public function ClientAllReviews(){
+        // Get the ID of the authenticated client.
+        $id = Auth::guard('client')->id();
+        
+        // Retrieve all approved reviews for the client, ordered by most recent.
+        $allreviews = Review::where('status', 1)->where('client_id', $id)->orderBy('id', 'desc')->get();
+        
+        // Return the view with the retrieved reviews.
+        return view('client.backend.review.view_all_review', compact('allreviews'));
+    }
 }
