@@ -123,7 +123,6 @@ class OrderController extends Controller
 
         // Set the Stripe API key.
         \Stripe\Stripe::setApiKey('sk_test_51Oml5cGAwoXiNtjJZbPFBKav0pyrR8GSwzUaLHLhInsyeCa4HI8kKf2IcNeUXc8jc8XVzBJyqjKnDLX9MlRjohrL003UDGPZgQ');
-
         
         // Use the token from the form to create a charge on Stripe.
         $token = $_POST['stripeToken'];
