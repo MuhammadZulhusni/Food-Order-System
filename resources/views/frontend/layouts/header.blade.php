@@ -16,21 +16,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="offers.html"><i class="icofont-sale-discount"></i> Offers <span class="badge badge-warning">New</span></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('list.restaurant') }}">
                         Restaurants
                     </a>
                 </li>
 
                 @auth
                     @php
-                        // Fetch the authenticated user's profile data
                         $id = Auth::user()->id;
                         $profileData = App\Models\User::find($id);
                     @endphp 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img alt="Generic placeholder image" src="{{ (!empty($profileData->photo)) ? url('upload/user_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" class="nav-osahan-pic rounded-pill"> My Account
+                            <img alt="User profile picture" src="{{ (!empty($profileData->photo)) ? url('upload/user_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" class="nav-osahan-pic rounded-pill"> My Account
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow-sm border-0">
                             <a class="dropdown-item" href="{{ route('dashboard') }}"><i class="icofont-food-cart"></i> Dashboard</a>
@@ -54,7 +53,6 @@
                     $total = 0;
                     $cart = session()->get('cart', []);
                     $groupedCart = [];
-                    // Group cart items by client ID
                     foreach ($cart as $item) {
                         $groupedCart[$item['client_id']][] = $item;
                     }
@@ -72,7 +70,7 @@
                                     $client = $clients[$clientId];
                                 @endphp
                                 <div class="dropdown-cart-top-header p-4">
-                                    <img class="img-fluid mr-3" alt="osahan" src="{{ asset('upload/client_images/' . $client->photo) }}">
+                                    <img class="img-fluid mr-3" alt="Restaurant image" src="{{ asset('upload/client_images/' . $client->photo) }}">
                                     <h6 class="mb-0">{{ $client->name }}</h6>
                                     <p class="text-secondary mb-0">{{ $client->address }}</p> 
                                 </div>
