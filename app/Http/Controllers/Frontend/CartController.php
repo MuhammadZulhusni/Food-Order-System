@@ -204,7 +204,7 @@ class CartController extends Controller
             } else {
                 // If the cart is empty, redirect to the homepage with an error notification
                 $notification = array(
-                    'message' => 'Shopping at list one item',
+                    'message' => 'Shop at least one item',
                     'alert-type' => 'error'
                 ); 
                 return redirect()->to('/')->with($notification);

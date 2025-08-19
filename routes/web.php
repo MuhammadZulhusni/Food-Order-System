@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Client\RestaurantController;
 
@@ -231,4 +232,19 @@ Route::controller(ReportController::class)->group(function(){
     Route::post('/client/search/bydate', 'ClientSearchByDate')->name('client.search.bydate');
     Route::post('/client/search/bymonth', 'ClientSearchByMonth')->name('client.search.bymonth');
     Route::post('/client/search/byyear', 'ClientSearchByYear')->name('client.search.byyear');
+});
+
+Route::controller(ReviewController::class)->group(function(){
+    Route::post('/store/review', 'StoreReview')->name('store.review');    
+});
+
+Route::controller(ReviewController::class)->group(function(){
+    Route::get('/admin/pending/review', 'AdminPendingReview')->name('admin.pending.review');
+    Route::get('/admin/approve/review', 'AdminApproveReview')->name('admin.approve.review'); 
+    Route::get('/admin/approve/review', 'AdminApproveReview')->name('admin.approve.review'); 
+    Route::get('/reviewchangeStatus', 'ReviewChangeStatus');  
+});
+
+Route::controller(ReviewController::class)->group(function(){
+    Route::get('/client/all/reviews', 'ClientAllReviews')->name('client.all.reviews'); 
 });

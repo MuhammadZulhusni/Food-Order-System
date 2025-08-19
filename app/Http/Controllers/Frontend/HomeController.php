@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Client;
-use App\Models\Menu;
-use App\Models\Gllery;
-use App\Models\Wishlist;
 use Carbon\Carbon;
+use App\Models\Menu;
+use App\Models\Client;
+use App\Models\Gllery;
+use App\Models\Review;
+use App\Models\Wishlist;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth; 
 
 
@@ -17,23 +18,46 @@ class HomeController extends Controller
     /**
      * Display the details of a specific restaurant.
      *
-     * @param  int  $id  The ID of the client (restaurant).
+     * @param  int  $id The ID of the client (restaurant).
      * @return \Illuminate\View\View
      */
     public function RestaurantDetails($id){
-     // Find the client (restaurant) by its ID
-     $client = Client::find($id);
+        // Find the client (restaurant) by its ID.
+        $client = Client::find($id);
 
-     // Get all menus for the client that contain at least one product
-     $menus = Menu::where('client_id',$client->id)->get()->filter(function($menu){
-        return $menu->products->isNotEmpty();
-     });
-     
-     // Get all gallery images associated with the client
-     $gallerys = Gllery::where('client_id',$id)->get();
-     
-     // Return the 'details_page' view, passing the client, menus, and gallerys data
-     return view('frontend.details_page',compact('client','menus','gallerys'));
+        // Get all menus for the client that contain at least one product.
+        $menus = Menu::where('client_id', $client->id)->get()->filter(function($menu){
+            return $menu->products->isNotEmpty();
+        });
+        
+        // Get all gallery images associated with the client.
+        $gallerys = Gllery::where('client_id', $id)->get();
+        
+        // Get all reviews for the client.
+        $reviews = Review::where('client_id',$client->id)->where('status',1)->get();
+        
+        // Calculate total reviews, average rating, and rating counts.
+        $totalReviews = $reviews->count();
+        $ratingSum = $reviews->sum('rating');
+        $averageRating = $totalReviews > 0 ? $ratingSum / $totalReviews : 0;
+        $roundedAverageRating = round($averageRating, 1);
+        
+        // Count the number of reviews for each rating level (1-5).
+        $ratingCounts = [
+            '5' => $reviews->where('rating', 5)->count(),
+            '4' => $reviews->where('rating', 4)->count(),
+            '3' => $reviews->where('rating', 3)->count(),
+            '2' => $reviews->where('rating', 2)->count(),
+            '1' => $reviews->where('rating', 1)->count(),
+        ];
+        
+        // Calculate the percentage of reviews for each rating level.
+        $ratingPercentages = array_map(function ($count) use ($totalReviews){
+            return $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
+        }, $ratingCounts);
+
+        // Return the view with all the prepared data.
+        return view('frontend.details_page', compact('client', 'menus', 'gallerys', 'reviews', 'roundedAverageRating', 'totalReviews', 'ratingCounts', 'ratingPercentages'));
     }
 
     /**
@@ -95,4 +119,6 @@ class HomeController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
+
 }
