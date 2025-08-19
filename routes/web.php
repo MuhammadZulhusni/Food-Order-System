@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Admin\ManageController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -216,4 +217,18 @@ Route::controller(ManageOrderController::class)->group(function(){
     Route::get('/user/order/list', 'UserOrderList')->name('user.order.list'); 
     Route::get('/user/order/details/{id}', 'UserOrderDetails')->name('user.order.details'); 
     Route::get('/user/invoice/download/{id}', 'UserInvoiceDownload')->name('user.invoice.download'); 
+});
+
+Route::controller(ReportController::class)->group(function(){
+    Route::get('/admin/all/reports', 'AminAllReports')->name('admin.all.reports'); 
+    Route::post('/admin/search/bydate', 'AminSearchByDate')->name('admin.search.bydate');
+    Route::post('/admin/search/bymonth', 'AminSearchByMonth')->name('admin.search.bymonth');
+    Route::post('/admin/search/byyear', 'AminSearchByYear')->name('admin.search.byyear');
+});
+
+Route::controller(ReportController::class)->group(function(){
+    Route::get('/client/all/reports', 'ClientAllReports')->name('client.all.reports'); 
+    Route::post('/client/search/bydate', 'ClientSearchByDate')->name('client.search.bydate');
+    Route::post('/client/search/bymonth', 'ClientSearchByMonth')->name('client.search.bymonth');
+    Route::post('/client/search/byyear', 'ClientSearchByYear')->name('client.search.byyear');
 });
