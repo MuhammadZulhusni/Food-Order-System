@@ -47,4 +47,33 @@ class ReviewController extends Controller
         $redirectUrl = $previousUrl ? $previousUrl . '#pills-reviews' : route('res.details', ['id' => $client]) . '#pills-reviews';
         return redirect()->to($redirectUrl)->with($notification);
     }
+
+    /**
+     * Retrieves all pending (unapproved) reviews and displays them in the admin view.
+     */
+    public function AdminPendingReview(){
+        $pedingReview = Review::where('status', 0)->orderBy('id', 'desc')->get();
+        return view('admin.backend.review.view_pending_review', compact('pedingReview'));
+    }
+
+    /**
+     * Retrieves all approved reviews and displays them in the admin view.
+     */
+    public function AdminApproveReview(){
+        $approveReview = Review::where('status', 1)->orderBy('id', 'desc')->get();
+        return view('admin.backend.review.view_approve_review', compact('approveReview'));
+    }
+
+    /**
+     * Updates the status of a review.
+     *
+     * @param \Illuminate\Http\Request $request The request containing the review ID and new status.
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating success.
+     */
+    public function ReviewChangeStatus(Request $request){
+        $review = Review::find($request->review_id);
+        $review->status = $request->status;
+        $review->save();
+        return response()->json(['success' => 'Status Change Successfully']);
+    }
 }

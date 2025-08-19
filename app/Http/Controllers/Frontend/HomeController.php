@@ -34,7 +34,7 @@ class HomeController extends Controller
         $gallerys = Gllery::where('client_id', $id)->get();
         
         // Get all reviews for the client.
-        $reviews = Review::where('client_id', $client->id)->get();
+        $reviews = Review::where('client_id',$client->id)->where('status',1)->get();
         
         // Calculate total reviews, average rating, and rating counts.
         $totalReviews = $reviews->count();
