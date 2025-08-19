@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Frontend\FilterController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Client\RestaurantController;
@@ -247,4 +248,9 @@ Route::controller(ReviewController::class)->group(function(){
 
 Route::controller(ReviewController::class)->group(function(){
     Route::get('/client/all/reviews', 'ClientAllReviews')->name('client.all.reviews'); 
+});
+
+Route::controller(FilterController::class)->group(function(){
+    Route::get('/list/restaurant', 'ListRestaurant')->name('list.restaurant'); 
+    Route::get('/filter/products', 'FilterProducts')->name('filter.products'); 
 });
