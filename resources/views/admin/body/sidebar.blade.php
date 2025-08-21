@@ -157,21 +157,12 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.permission') }}" data-key="t-lightbox">All Permission</a></li>
-                        <li><a href="{{ route('admin.approve.review') }}" data-key="t-range-slider">Approve Review</a></li>
-                        
+                        <li><a href="{{ route('all.roles') }}" data-key="t-range-slider">All Roles</a></li>
+                        <li><a href="{{ route('add.roles.permission') }}" data-key="t-range-slider">Role In Permission</a></li>
+                        <li><a href="{{ route('all.roles.permission') }}" data-key="t-range-slider">All Role In Permission</a></li>
                     </ul>
                 </li>
             </ul>
-
-            <div class="card sidebar-alert border-0 text-center mx-4 mb-0 mt-5">
-                <div class="card-body">
-                    <img src="assets/images/giftbox.png" alt="">
-                    <div class="mt-4">
-                        <h5 class="alertcard-title font-size-16">Unlimited Access</h5>
-                        <p class="font-size-13">Upgrade your plan from a Free trial, to select ‘Business Plan’.</p>
-                    </div>
-                </div>
-            </div>
         </div>
         </div>
 </div>
