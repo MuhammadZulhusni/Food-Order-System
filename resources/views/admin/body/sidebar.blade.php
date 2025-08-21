@@ -162,6 +162,17 @@
                         <li><a href="{{ route('all.roles.permission') }}" data-key="t-range-slider">All Role In Permission</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="gift"></i>
+                        <span data-key="t-ui-elements">Manage Admin</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('all.admin') }}" data-key="t-lightbox">All Admin</a></li>
+                        <li><a href="{{ route('add.admin') }}" data-key="t-range-slider">Add Admin</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
         </div>
