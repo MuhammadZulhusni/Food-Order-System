@@ -11,7 +11,11 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <a href="{{ route('add.permission') }}" class="btn btn-primary waves-effect waves-light">Add Permission</a>
+                            <a href="{{ route('add.permission') }}" class="btn btn-primary waves-effect waves-light">Add Permission</a>&nbsp;&nbsp;
+                            
+                            <a href="{{ route('import.permission') }}" class="btn btn-warning waves-effect waves-light">Import</a>&nbsp;&nbsp;
+
+                            <a href="{{ route('add.permission') }}" class="btn btn-danger waves-effect waves-light">Export</a>
                         </ol>
                     </div>
                 </div>
