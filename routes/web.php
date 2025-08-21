@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\FilterController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Admin\ManageOrderController;
 use App\Http\Controllers\Client\RestaurantController;
+use App\Http\Controllers\Admin\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -254,4 +255,13 @@ Route::controller(ReviewController::class)->group(function(){
 Route::controller(FilterController::class)->group(function(){
     Route::get('/list/restaurant', 'ListRestaurant')->name('list.restaurant'); 
     Route::get('/filter/products', 'FilterProducts')->name('filter.products'); 
+});
+
+Route::controller(RoleController::class)->group(function(){
+    Route::get('/all/permission', 'AllPermission')->name('all.permission');  
+    Route::get('/add/permission', 'AddPermission')->name('add.permission');
+    Route::post('/store/permission', 'StorePermission')->name('permission.store');
+    Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
+    Route::post('/update/permission', 'UpdatePermission')->name('permission.update');
+    Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
 });
