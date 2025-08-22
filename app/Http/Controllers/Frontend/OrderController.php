@@ -9,8 +9,11 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Session;
 use App\Models\Coupon;
 use App\Models\Order;
+use App\Models\Admin;
 use App\Models\OrderItem;
 use Carbon\Carbon;
+use App\Notifications\OrderComplete;
+use Illuminate\Support\Facades\Notification; 
 
 class OrderController extends Controller
 {
@@ -22,6 +25,9 @@ class OrderController extends Controller
      */
     public function CashOrder(Request $request)
     {
+        // Fetch all admins to send a notification to each
+        $admins = Admin::where('role', 'admin')->get();
+
         // Validate incoming request data
         $validateData = $request->validate([
             'name' => 'required',
@@ -38,8 +44,8 @@ class OrderController extends Controller
         }
 
         // Apply coupon discount if it exists in the session
-        if (Session()->has('coupon')) {
-            $tt = (Session()->get('coupon')['discount_amount']);
+        if (Session::has('coupon')) {
+            $tt = Session::get('coupon')['discount_amount'];
         } else {
             $tt = $totalAmount;
         }
@@ -83,6 +89,11 @@ class OrderController extends Controller
         }
         if (Session::has('cart')) {
             Session::forget('cart');
+        }
+
+        // Send a notification to each admin
+        foreach ($admins as $admin) {
+            $admin->notify(new OrderComplete($request->name));
         }
 
         $notification = [
@@ -186,5 +197,15 @@ class OrderController extends Controller
         ];
 
         return view('frontend.checkout.thanks')->with($notification);
+    }
+
+    public function MarkAsRead(Request $request, $notificationId){
+        $user = Auth::guard('admin')->user();
+        $notification = $user->notifications()->where('id',$notificationId)->first();
+
+        if ($notification) {
+            $notification->markAsRead();
+        }
+        return response()->json(['count' => $user->unreadNotifications()->count()]);
     }
 }
