@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark osahan-nav">
     <div class="container">
         <a class="navbar-brand" href="{{ route('index') }}">
-            <img alt="logo" src="{{ asset('frontend/img/logo.png') }}">
+            <img alt="logo" src="{{ asset('cust.png') }}" style="height: 40px; width: auto;">
         </a>
         
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,12 +10,6 @@
         
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="offers.html"><i class="icofont-sale-discount"></i> Offers <span class="badge badge-warning">New</span></a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('list.restaurant') }}">
                         Restaurants

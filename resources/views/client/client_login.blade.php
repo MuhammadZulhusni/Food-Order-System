@@ -2,41 +2,42 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8" />
-    <title>Client Login </title>
+    <title>Client Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
-    <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
+    <meta content="Client Login for the Your System Name platform." name="description" />
+    <meta content="Your Name" name="author" />
+    <link rel="shortcut icon" href="{{ asset('client.png') }}">
 
+    <!-- CSS Links -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/preloader.min.css') }}" type="text/css" />
-
     <link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>
 
 <body>
+
     <div class="auth-page">
         <div class="container-fluid p-0">
             <div class="row g-0">
+                <!-- Left Column: Login Form -->
                 <div class="col-xxl-3 col-lg-4 col-md-5">
-                    <div class="auth-full-page-content d-flex p-sm-5 p-4">
+                    <div class="auth-full-page-content d-flex align-items-center p-sm-5 p-4">
                         <div class="w-100">
                             <div class="d-flex flex-column h-100">
                                 <div class="mb-4 mb-md-5 text-center">
-                                    <a href="index.html" class="d-block auth-logo">
-                                        <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Client Login</span>
+                                    <a href="{{ route('client.login') }}" class="d-block auth-logo">
+                                        <img src="{{ asset('client.png') }}" alt="Client Logo" height="40"> <span class="logo-txt">Client</span>
                                     </a>
                                 </div>
                                 <div class="auth-content my-auto">
                                     <div class="text-center">
-                                        <h5 class="mb-0">Welcome Back !</h5>
-                                        <p class="text-muted mt-2">Sign in to continue to Client.</p>
+                                        <h5 class="mb-0">Welcome Back!</h5>
+                                        <p class="text-muted mt-2">Sign in to access your client dashboard.</p>
                                     </div>
 
+                                    <!-- Error and success messages display -->
                                     @if ($errors->any())
                                         <div class="alert alert-danger mt-3">
                                             <ul class="mb-0">
@@ -46,13 +47,28 @@
                                             </ul>
                                         </div>
                                     @endif
+                                    
+                                    @if (Session::has('error'))
+                                        <div class="alert alert-danger mt-3">
+                                            <ul class="mb-0">
+                                                <li>{{ Session::get('error') }}</li>
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    @if (Session::has('success'))
+                                        <div class="alert alert-success mt-3">
+                                            <ul class="mb-0">
+                                                <li>{{ Session::get('success') }}</li>
+                                            </ul>
+                                        </div>
+                                    @endif
 
+                                    <!-- Client Login Form -->
                                     <form class="mt-4 pt-2" action="{{ route('client.login_submit') }}" method="post">
                                         @csrf
-
                                         <div class="mb-3">
                                             <label class="form-label">Email</label>
-                                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email">
+                                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email" required>
                                         </div>
                                         <div class="mb-3">
                                             <div class="d-flex align-items-start">
@@ -61,21 +77,14 @@
                                                 </div>
                                                 <div class="flex-shrink-0">
                                                     <div class="">
-                                                        <a href="{{ route('admin.forget_password') }}" class="text-muted">Forgot password?</a>
+                                                        <a href="{{ route('client.change.password') }}" class="text-muted">Forgot password?</a>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="input-group auth-pass-inputgroup">
-                                                <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                                                <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" required>
                                                 <button class="btn btn-light shadow-none ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4">
-                                            <div class="col">
-                                                <div class="form-check">
-                                                    {{-- You can add a "Remember Me" checkbox here if needed --}}
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3">
@@ -83,55 +92,21 @@
                                         </div>
                                     </form>
 
-                                    <div class="mt-4 pt-2 text-center">
-                                        <div class="signin-other-title">
-                                            <h5 class="font-size-14 mb-3 text-muted fw-medium">- Sign in with -</h5>
-                                        </div>
-
-                                        <ul class="list-inline mb-0">
-                                            <li class="list-inline-item">
-                                                <a href="javascript:void()" class="social-list-item bg-primary text-white border-primary">
-                                                    <i class="mdi mdi-facebook"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript:void()" class="social-list-item bg-info text-white border-info">
-                                                    <i class="mdi mdi-twitter"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript:void()" class="social-list-item bg-danger text-white border-danger">
-                                                    <i class="mdi mdi-google"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
                                     <div class="mt-5 text-center">
-                                        <p class="text-muted mb-0">Don't have an account ? <a href="auth-register.html" class="text-primary fw-semibold"> Signup now </a> </p>
+                                        <p class="text-muted mb-0">Don't have an account? <a href="{{ route('client.register') }}" class="text-primary fw-semibold"> Signup now </a> </p>
                                     </div>
-                                </div>
-                                <div class="mt-4 mt-md-5 text-center">
-                                    <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> EasyLearing . Crafted with <i class="mdi mdi-heart text-danger"></i> by EasyLearing</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
+                </div>
+
+                <!-- Right Column: Client Overview Carousel -->
                 <div class="col-xxl-9 col-lg-8 col-md-7">
                     <div class="auth-bg pt-md-5 p-4 d-flex">
                         <div class="bg-overlay bg-primary"></div>
                         <ul class="bg-bubbles">
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
+                            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
                         </ul>
                         <div class="row justify-content-center align-items-center">
                             <div class="col-xl-7">
@@ -143,123 +118,85 @@
                                             <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                                         </div>
                                         <div class="carousel-inner">
+                                            <!-- Carousel Item 1: Menu Management -->
                                             <div class="carousel-item active">
                                                 <div class="testi-contain text-white">
                                                     <i class="bx bxs-quote-alt-left text-success display-6"></i>
-
-                                                    <h4 class="mt-4 fw-medium lh-base text-white">“I feel confident
-                                                        imposing change
-                                                        on myself. It's a lot more progressing fun than looking back.
-                                                        That's why
-                                                        I ultricies enim
-                                                        at malesuada nibh diam on tortor neaded to throw curve balls.”
+                                                    <h4 class="mt-4 fw-medium lh-base text-white">“Easily manage your entire menu from one place. Add new dishes, update prices, and showcase your bestsellers to attract more customers.”
                                                     </h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-shrink-0">
-                                                                <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" class="avatar-md img-fluid rounded-circle" alt="...">
+                                                                <i class="mdi mdi-silverware-fork-knife avatar-md img-fluid rounded-circle" style="font-size: 3rem;"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3 mb-4">
-                                                                <h5 class="font-size-18 text-white">Richard Drews
-                                                                </h5>
-                                                                <p class="mb-0 text-white-50">Web Designer</p>
+                                                                <h5 class="font-size-18 text-white">Menu Management</h5>
+                                                                <p class="mb-0 text-white-50">Simple & Efficient</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                            <!-- Carousel Item 2: Order Tracking -->
                                             <div class="carousel-item">
                                                 <div class="testi-contain text-white">
                                                     <i class="bx bxs-quote-alt-left text-success display-6"></i>
-
-                                                    <h4 class="mt-4 fw-medium lh-base text-white">“Our task must be to
-                                                        free ourselves by widening our circle of compassion to embrace
-                                                        all living
-                                                        creatures and
-                                                        the whole of quis consectetur nunc sit amet semper justo. nature
-                                                        and its beauty.”</h4>
+                                                    <h4 class="mt-4 fw-medium lh-base text-white">“Track all your incoming orders in real-time. From preparation to delivery, our system helps you stay on top of every order to ensure customer satisfaction.”</h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-shrink-0">
-                                                                <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" class="avatar-md img-fluid rounded-circle" alt="...">
+                                                                <i class="mdi mdi-truck-delivery-outline avatar-md img-fluid rounded-circle" style="font-size: 3rem;"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3 mb-4">
-                                                                <h5 class="font-size-18 text-white">Rosanna French
-                                                                </h5>
-                                                                <p class="mb-0 text-white-50">Web Developer</p>
+                                                                <h5 class="font-size-18 text-white">Real-Time Order Tracking</h5>
+                                                                <p class="mb-0 text-white-50">Boost Efficiency</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                            <!-- Carousel Item 3: Business Insights -->
                                             <div class="carousel-item">
                                                 <div class="testi-contain text-white">
                                                     <i class="bx bxs-quote-alt-left text-success display-6"></i>
-
-                                                    <h4 class="mt-4 fw-medium lh-base text-white">“I've learned that
-                                                        people will forget what you said, people will forget what you
-                                                        did,
-                                                        but people will never forget
-                                                        how donec in efficitur lectus, nec lobortis metus you made them
-                                                        feel.”</h4>
+                                                    <h4 class="mt-4 fw-medium lh-base text-white">“Gain valuable insights into your restaurant's performance. View sales reports, top-selling items, and customer reviews to make data-driven decisions.”</h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
-                                                            <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" class="avatar-md img-fluid rounded-circle" alt="...">
-                                                            <div class="flex-1 ms-3 mb-4">
-                                                                <h5 class="font-size-18 text-white">Ilse R. Eaton</h5>
-                                                                <p class="mb-0 text-white-50">Manager
-                                                                </p>
+                                                            <div class="flex-shrink-0">
+                                                                <i class="mdi mdi-chart-bar avatar-md img-fluid rounded-circle" style="font-size: 3rem;"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3 mb-4">
+                                                                <h5 class="font-size-18 text-white">Business Insights</h5>
+                                                                <p class="mb-0 text-white-50">Grow Your Business</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
             </div>
         </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
     <script src="{{ asset('backend/assets/libs/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/metismenu/metisMenu.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/feather-icons/feather.min.js') }}"></script>
+    <!-- pace js -->
     <script src="{{ asset('backend/assets/libs/pace-js/pace.min.js') }}"></script>
+    <!-- password addon init -->
     <script src="{{ asset('backend/assets/js/pages/pass-addon.init.js') }}"></script>
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-    <script>
-        @if(Session::has('message'))
-        var type = "{{ Session::get('alert-type','info') }}"
-        switch (type) {
-            case 'info':
-                toastr.info(" {{ Session::get('message') }} ");
-                break;
-
-            case 'success':
-                toastr.success(" {{ Session::get('message') }} ");
-                break;
-
-            case 'warning':
-                toastr.warning(" {{ Session::get('message') }} ");
-                break;
-
-            case 'error':
-                toastr.error(" {{ Session::get('message') }} ");
-                break;
-        }
-        @endif
-    </script>
-
 
 </body>
 

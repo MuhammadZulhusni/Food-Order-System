@@ -4,7 +4,7 @@
     <div class="container">
        <div class="section-header text-center">
           <h2>Popular Restaurants</h2>
-          <p>Top restaurants, cafes, pubs, and bars in Ludhiana, based on trends</p>
+          <p>Discover top-rated restaurants, cafes, and eateries near you!</p>
           <span class="line"></span>
        </div>
        <div class="row">
@@ -34,53 +34,65 @@
         $avarage = App\Models\Review::where('client_id',$client->id)->where('status',1)->avg('rating');
      @endphp
 
-   <div class="col-md-3">  
-         <div class="item pb-3">
-            <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-               <div class="list-card-image">
-                  <div class="star position-absolute">
-                     <span class="badge badge-success">
-                        <i class="icofont-star"></i>{{ number_format($avarage,1) }} ({{ count($reviewcount) }}+)
-                     </span>
+   <div class="col-md-4 mb-4">  
+         <div class="list-card bg-white rounded overflow-hidden position-relative shadow-sm h-100">
+            <!-- Restaurant Image and Overlays -->
+            <div class="list-card-image position-relative">
+               <!-- Promoted Badge -->
+               @if ($coupons)
+                  <div class="member-plan position-absolute p-2" style="background-color: #f7a522; color: #fff; top: 10px; left: 10px; border-radius: 5px;">
+                      <span class="font-weight-bold">PROMOTED</span>
                   </div>
-                  <div class="favourite-heart text-danger position-absolute">
-                     <a aria-label="Add to Wishlist" onclick="addWishList({{$client->id}})">
-                        <i class="icofont-heart"></i>
-                     </a>
-                  </div>
-                  @if ($coupons)
-                     <div class="member-plan position-absolute"><span class="badge badge-dark">Promoted</span></div>
-                  @endif
-
-                  <a href="{{ route('res.details',$client->id) }}">
-                     <img src="{{ asset('upload/client_images/' . $client->photo) }}" class="img-fluid item-img" style="width: 300px; height:200px;">
+               @endif
+               
+               <!-- Wishlist Heart -->
+               <div class="favourite-heart text-danger position-absolute" style="top: 10px; right: 10px;">
+                  <a aria-label="Add to Wishlist" onclick="addWishList({{$client->id}})" style="color: #fff; background-color: rgba(0,0,0,0.5); padding: 8px; border-radius: 50%;">
+                     <i class="icofont-heart"></i>
                   </a>
                </div>
-               <div class="p-3 position-relative">
-                  <div class="list-card-body">
-                     <h6 class="mb-1"><a href="{{ route('res.details',$client->id) }}" class="text-black">{{ $client->name }}</a></h6>
-                     <p class="text-gray mb-3">{{ $menuNamesString }}</p>
-                     <p class="text-gray mb-3 time">
-                        <span class="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2">
-                           <i class="icofont-wall-clock"></i> 20–25 min
-                        </span>  
-                     </p>
+               
+               <a href="{{ route('res.details',$client->id) }}">
+                  <img src="{{ asset('upload/client_images/' . $client->photo) }}" class="img-fluid item-img" style="width: 100%; height:200px; object-fit: cover;">
+               </a>
+            </div>
+
+            <!-- Restaurant Details Section -->
+            <div class="p-3 position-relative">
+               <div class="list-card-body">
+                  <h6 class="mb-1">
+                     <a href="{{ route('res.details',$client->id) }}" class="text-black">{{ $client->name }}</a>
+                  </h6>
+                  <p class="text-gray mb-2" style="font-size: 0.9rem;">{{ $menuNamesString }}</p>
+                  
+                  <!-- Rating and Review Count -->
+                  <div class="d-flex align-items-center mb-2">
+                     <span class="badge badge-success p-2" style="background-color: #28a745; color: #fff;">
+                        <i class="icofont-star"></i> {{ number_format($avarage,1) }}
+                     </span>
+                     <span class="text-gray ml-2" style="font-size: 0.8rem;">({{ count($reviewcount) }} Reviews)</span>
                   </div>
-                  <div class="list-card-badge">
-                     @if ($coupons)
-                        <span class="badge badge-success">OFFER</span> 
-                        <small>{{ $coupons->discount }}% off | Use Coupon {{ $coupons->coupon_name }}</small>
-                     @else 
-                        <span class="badge badge-success">OFFER</span> 
-                        <small>Right Now There Have No Coupon</small>
-                     @endif
-                  </div>
+               </div>
+
+               <!-- Offer/Coupon Banner -->
+               <div class="list-card-badge mt-2">
+                  @if ($coupons)
+                     <span class="badge badge-success p-2" style="background-color: #28a745; color: #fff;">
+                        <i class="icofont-sale-discount"></i> OFFER
+                     </span> 
+                     <small style="color: #888;">{{ $coupons->discount }}% off | Use Coupon <b style="color: #000;">{{ $coupons->coupon_name }}</b></small>
+                  @else 
+                     <span class="badge badge-secondary p-2" style="background-color: #6c757d; color: #fff;">
+                        NO OFFERS
+                     </span> 
+                     <small style="color: #888;">No active coupons right now.</small>
+                  @endif
                </div>
             </div>
          </div>  
    </div> 
    @endforeach
-   {{-- // end col md-3 --}}
+   {{-- // end col md-4 --}}
        </div>
     </div>
  </section>
