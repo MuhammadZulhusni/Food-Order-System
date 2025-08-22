@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => App\Http\Middleware\Admin::class, // 'admin' alias maps to the Admin middleware
             'client' => App\Http\Middleware\Client::class, // 'client' alias maps to the Client middleware
             'status' => App\Http\Middleware\ClientStatus::class, // 'status' alias maps to the ClientStatus middleware
-            'permission' => App\Http\Middleware\CheckPermission::class
+            'permission' => App\Http\Middleware\CheckPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
