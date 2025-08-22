@@ -7,9 +7,9 @@
       <meta name="csrf-token" content="{{ csrf_token() }}" >
       <meta name="description" content="Askbootstrap">
       <meta name="author" content="Askbootstrap">
-      <title>Osahan Eat - Online Food Ordering Website HTML Template</title>
+      <title>Online Food Ordering </title>
       <!-- Favicon Icon -->
-      <link rel="icon" type="image/png" href="{{ asset('frontend/img/favicon.png') }}">
+      <link rel="icon" type="image/png" href="{{ asset('cust.png') }}">
       <!-- Bootstrap core CSS-->
       <link href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
       <!-- Font Awesome-->
@@ -38,8 +38,6 @@
       @include('frontend.layouts.ads')
 
       @yield('content')
-
-      @include('frontend.layouts.member')
 
       @include('frontend.layouts.footer')
       <!-- jQuery -->

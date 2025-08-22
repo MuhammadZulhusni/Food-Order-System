@@ -6,8 +6,8 @@
       <meta name="description" content="Askbootstrap">
       <meta name="author" content="Askbootstrap">
       <meta name="csrf-token" content="{{ csrf_token() }}">
-      <title>User Dashboard - Online Food Ordering Website</title>
-      <link rel="icon" type="image/png" href="{{ asset('frontend/img/favicon.png') }}">
+      <title>User Dashboard</title>
+      <link rel="icon" type="image/png" href="{{ asset('cust.png') }}">
       <link href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
       <link href="{{ asset('frontend/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
       <link href="{{ asset('frontend/vendor/icofont/icofont.min.css') }}" rel="stylesheet">
@@ -22,8 +22,6 @@
       @include('frontend.dashboard.header')
 
       @yield('dashboard')
-
-      @include('frontend.dashboard.footer')
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 

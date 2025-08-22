@@ -23,7 +23,7 @@
                 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="book-open"></i>
                         <span data-key="t-apps">Menu</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -42,7 +42,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="shopping-bag"></i>
                         <span data-key="t-apps">Product</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -61,7 +61,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="image"></i>
                         <span data-key="t-apps">Gallery</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -80,7 +80,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="tag"></i>
                         <span data-key="t-apps">Coupon</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -99,7 +99,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="shopping-cart"></i>
                         <span data-key="t-apps">Manage Orders</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -113,7 +113,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="bar-chart-2"></i>
                         <span data-key="t-apps">Manage Reports</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -127,7 +127,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="message-square"></i>
                         <span data-key="t-apps">Manage Reviews</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -142,16 +142,6 @@
                 @endif
 
             </ul>
-
-            <div class="card sidebar-alert border-0 text-center mx-4 mb-0 mt-5">
-                <div class="card-body">
-                    <img src="assets/images/giftbox.png" alt="">
-                    <div class="mt-4">
-                        <h5 class="alertcard-title font-size-16">Unlimited Access</h5>
-                        <p class="font-size-13">Upgrade your plan from a Free trial, to select ‘Business Plan’.</p>
-                    </div>
-                </div>
-            </div>
         </div>
         </div>
 </div>

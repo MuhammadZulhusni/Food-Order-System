@@ -11,6 +11,7 @@ use App\Imports\PermissionImport;
 use Spatie\Permission\Models\Role;
 use App\Models\Admin;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class RoleController extends Controller
 {
@@ -245,6 +246,110 @@ class RoleController extends Controller
 
         $notification = [
             'message' => 'Role Permission Deleted Successfully',
+            'alert-type' => 'success'
+        ];
+        return redirect()->back()->with($notification);
+    }
+
+    /**
+     * Display a list of all administrators.
+     */
+    public function AllAdmin()
+    {
+        $alladmin = Admin::latest()->get();
+        return view('admin.backend.pages.admin.all_admin', compact('alladmin'));
+    }
+
+    /**
+     * Display the form to create a new administrator.
+     */
+    public function AddAdmin()
+    {
+        $roles = Role::all();
+        return view('admin.backend.pages.admin.add_admin', compact('roles'));
+    }
+
+    /**
+     * Store a new administrator and assign a role.
+     */
+    public function AdminStore(Request $request)
+    {
+        $user = new Admin();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->password = Hash::make($request->password);
+        $user->role = 'admin';
+        $user->status = '1';
+        $user->save();
+
+        if ($request->roles) {
+            $role = Role::where('id', $request->roles)->where('guard_name', 'admin')->first();
+            if ($role) {
+                $user->assignRole($role->name);
+            }
+        }
+
+        $notification = [
+            'message' => 'New Admin Inserted Successfully',
+            'alert-type' => 'success'
+        ];
+        return redirect()->route('all.admin')->with($notification);
+    }
+
+    /**
+     * Display the form to edit an administrator.
+     */
+    public function Editadmin($id)
+    {
+        $admin = Admin::find($id);
+        $roles = Role::all();
+        return view('admin.backend.pages.admin.edit_admin', compact('roles', 'admin'));
+    }
+
+    /**
+     * Update an administrator's details and role.
+     */
+    public function AdminUpdate(Request $request, $id)
+    {
+        $user = Admin::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->role = 'admin';
+        $user->status = '1';
+        $user->save();
+
+        // Detach all existing roles before assigning the new one.
+        $user->roles()->detach();
+        if ($request->roles) {
+            $role = Role::where('id', $request->roles)->where('guard_name', 'admin')->first();
+            if ($role) {
+                $user->assignRole($role->name);
+            }
+        }
+
+        $notification = [
+            'message' => 'New Admin Updated Successfully',
+            'alert-type' => 'success'
+        ];
+        return redirect()->route('all.admin')->with($notification);
+    }
+
+    /**
+     * Delete an administrator from the database.
+     */
+    public function DeleteAdmin($id)
+    {
+        $admin = Admin::find($id);
+        if (!is_null($admin)) {
+            $admin->delete();
+        }
+
+        $notification = [
+            'message' => 'Admin Deleted Successfully',
             'alert-type' => 'success'
         ];
         return redirect()->back()->with($notification);

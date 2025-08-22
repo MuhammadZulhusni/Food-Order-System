@@ -4,9 +4,8 @@
        <div class="row d-flex align-items-center py-lg-4">
           <div class="col-lg-8 mx-auto">
              <div class="homepage-search-title text-center">
-                <h1 class="mb-2 display-4 text-shadow text-white font-weight-normal"><span class="font-weight-bold">Discover the best food & drinks in India 🇮🇳
-                </span></h1>
-                <h5 class="mb-5 text-shadow text-white-50 font-weight-normal">Lists of top restaurants, cafes, pubs, and bars in Melbourne, based on trends</h5>
+                <h1 class="mb-2 display-4 text-shadow text-white font-weight-normal"><span class="font-weight-bold">Discover the best food & drinks near you.</span></h1>
+                <h5 class="mb-5 text-shadow text-white-50 font-weight-normal">Explore top restaurants, cafes, and bars based on popular trends.</h5>
              </div>
              <div class="homepage-search-form">
                 <form class="form-noborder">
@@ -35,11 +34,11 @@
                    </div>
                 </form>
              </div>
-             <h6 class="mt-4 text-shadow text-white font-weight-normal">E.g. Beverages, Pizzas, Chinese, Bakery, Indian...</h6>
+             <h6 class="mt-4 text-shadow text-white font-weight-normal">E.g. Pizza, Burgers, Sushi, Vegan, Thai...</h6>
              <div class="owl-carousel owl-carousel-category owl-theme">
-    @php
-       $products = App\Models\Product::latest()->limit(8)->get();
-    @endphp           
+            @php
+               $products = App\Models\Product::latest()->limit(8)->get();
+            @endphp           
               @foreach ($products  as $product) 
               <div class="item">
                    <div class="osahan-category-item">
@@ -51,9 +50,6 @@
                    </div>
                 </div>
                 @endforeach
-                 
-                
-
              </div>
           </div>
         

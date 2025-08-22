@@ -7,7 +7,7 @@
                 <li class="menu-title" data-key="t-menu">Menu</li>
 
                 <li>
-                    <a href="index.html">
+                   <a href="{{ route('admin.dashboard') }}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Dashboard</span>
                     </a>
@@ -15,7 +15,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="tag"></i>
                         <span data-key="t-apps">Category</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -34,7 +34,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="map-pin"></i>
                         <span data-key="t-apps">City</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -48,7 +48,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="shopping-bag"></i>
                         <span data-key="t-apps">Manage Product</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -67,7 +67,7 @@
                 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="briefcase"></i>
                         <span data-key="t-apps">Manage Restaurant</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -86,7 +86,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="image"></i>
                         <span data-key="t-apps">Manage Banner</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -100,7 +100,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="shopping-cart"></i>
                         <span data-key="t-apps">Manage Orders</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -131,7 +131,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="briefcase"></i>
+                        <i data-feather="bar-chart-2"></i>
                         <span data-key="t-components">Manage Reports</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -141,7 +141,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="gift"></i>
+                        <i data-feather="star"></i>
                         <span data-key="t-ui-elements">Manage Review</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -152,7 +152,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="gift"></i>
+                        <i data-feather="users"></i>
                         <span data-key="t-ui-elements">Role & Permission</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -160,6 +160,17 @@
                         <li><a href="{{ route('all.roles') }}" data-key="t-range-slider">All Roles</a></li>
                         <li><a href="{{ route('add.roles.permission') }}" data-key="t-range-slider">Role In Permission</a></li>
                         <li><a href="{{ route('all.roles.permission') }}" data-key="t-range-slider">All Role In Permission</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="user-check"></i>
+                        <span data-key="t-ui-elements">Manage Admin</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('all.admin') }}" data-key="t-lightbox">All Admin</a></li>
+                        <li><a href="{{ route('add.admin') }}" data-key="t-range-slider">Add Admin</a></li>
                     </ul>
                 </li>
             </ul>
