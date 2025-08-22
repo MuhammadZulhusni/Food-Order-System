@@ -3,12 +3,13 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Admin Login</title>
+    <title>Super Admin Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
-    <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
+    <meta content="Super Admin Login for the Your System Name platform." name="description" />
+    <meta content="Your Name" name="author" />
+    <link rel="shortcut icon" href="{{ asset('super-admin.png') }}">
 
+    <!-- CSS Links -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/preloader.min.css') }}" type="text/css" />
     <link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -20,22 +21,23 @@
     <div class="auth-page">
         <div class="container-fluid p-0">
             <div class="row g-0">
+                <!-- Left Column: Login Form -->
                 <div class="col-xxl-3 col-lg-4 col-md-5">
-                    <div class="auth-full-page-content d-flex p-sm-5 p-4">
+                    <div class="auth-full-page-content d-flex align-items-center p-sm-5 p-4">
                         <div class="w-100">
                             <div class="d-flex flex-column h-100">
                                 <div class="mb-4 mb-md-5 text-center">
-                                    <a href="index.html" class="d-block auth-logo">
-                                        <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Admin Login</span>
+                                    <a href="{{ route('admin.login') }}" class="d-block auth-logo">
+                                        <img src="{{ asset('super-admin.png') }}" alt="" height="40">
                                     </a>
                                 </div>
                                 <div class="auth-content my-auto">
                                     <div class="text-center">
-                                        <h5 class="mb-0">Welcome Back !</h5>
-                                        <p class="text-muted mt-2">Sign in to continue to Minia.</p>
+                                        <h5 class="mb-0">Super Admin Login</h5>
+                                        <p class="text-muted mt-2">Sign in to access the system dashboard.</p>
                                     </div>
 
-                                    {{-- Validation Error Display --}}
+                                    <!-- Error and success messages display -->
                                     @if ($errors->any())
                                         <div class="alert alert-danger mt-3">
                                             <ul class="mb-0">
@@ -46,7 +48,6 @@
                                         </div>
                                     @endif
 
-                                    {{-- Session Error/Success Messages (Consider using Toastr.js for better UX, similar to client login) --}}
                                     @if (Session::has('error'))
                                         <div class="alert alert-danger mt-3">
                                             <ul class="mb-0">
@@ -62,13 +63,12 @@
                                         </div>
                                     @endif
 
-                                    {{-- Admin Login Form --}}
+                                    <!-- Admin Login Form -->
                                     <form class="mt-4 pt-2" action="{{ route('admin.login_submit') }}" method="post">
                                         @csrf
-
                                         <div class="mb-3">
                                             <label class="form-label">Email</label>
-                                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email">
+                                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email" required>
                                         </div>
                                         <div class="mb-3">
                                             <div class="d-flex align-items-start">
@@ -83,61 +83,21 @@
                                             </div>
 
                                             <div class="input-group auth-pass-inputgroup">
-                                                <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                                                <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" required>
                                                 <button class="btn btn-light shadow-none ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4">
-                                            <div class="col">
-                                                <div class="form-check">
-                                                    {{-- Remember Me checkbox can be placed here if needed --}}
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3">
                                             <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In</button>
                                         </div>
                                     </form>
-
-                                    {{-- Social Login Options --}}
-                                    <div class="mt-4 pt-2 text-center">
-                                        <div class="signin-other-title">
-                                            <h5 class="font-size-14 mb-3 text-muted fw-medium">- Sign in with -</h5>
-                                        </div>
-                                        <ul class="list-inline mb-0">
-                                            <li class="list-inline-item">
-                                                <a href="javascript:void()" class="social-list-item bg-primary text-white border-primary">
-                                                    <i class="mdi mdi-facebook"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript:void()" class="social-list-item bg-info text-white border-info">
-                                                    <i class="mdi mdi-twitter"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript:void()" class="social-list-item bg-danger text-white border-danger">
-                                                    <i class="mdi mdi-google"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    {{-- Don't have an account? --}}
-                                    <div class="mt-5 text-center">
-                                        <p class="text-muted mb-0">Don't have an account ? <a href="auth-register.html" class="text-primary fw-semibold"> Signup now </a> </p>
-                                    </div>
-                                </div>
-                                {{-- Footer --}}
-                                <div class="mt-4 mt-md-5 text-center">
-                                    <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> Zulhusni . Crafted with <i class="mdi mdi-heart text-danger"></i> by Zul</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Carousel Section --}}
+                <!-- Right Column: System Overview Carousel -->
                 <div class="col-xxl-9 col-lg-8 col-md-7">
                     <div class="auth-bg pt-md-5 p-4 d-flex">
                         <div class="bg-overlay bg-primary"></div>
@@ -154,60 +114,58 @@
                                             <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                                         </div>
                                         <div class="carousel-inner">
+                                            <!-- Carousel Item 1: Welcome -->
                                             <div class="carousel-item active">
                                                 <div class="testi-contain text-white">
                                                     <i class="bx bxs-quote-alt-left text-success display-6"></i>
-                                                    <h4 class="mt-4 fw-medium lh-base text-white">“I feel confident
-                                                        imposing change on myself. It's a lot more progressing fun than looking back.
-                                                        That's why I ultricies enim at malesuada nibh diam on tortor neaded to throw curve balls.”
+                                                    <h4 class="mt-4 fw-medium lh-base text-white">“Welcome to the Admin Panel. From here you can manage all aspects of your food delivery system, including restaurants, orders, and users.”
                                                     </h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-shrink-0">
-                                                                <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" class="avatar-md img-fluid rounded-circle" alt="...">
+                                                                <i class="mdi mdi-food-outline avatar-md img-fluid rounded-circle" style="font-size: 3rem;"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3 mb-4">
-                                                                <h5 class="font-size-18 text-white">Richard Drews</h5>
-                                                                <p class="mb-0 text-white-50">Web Designer</p>
+                                                                <h5 class="font-size-18 text-white">System Management</h5>
+                                                                <p class="mb-0 text-white-50">Manage Everything</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                            <!-- Carousel Item 2: Security Tip -->
                                             <div class="carousel-item">
                                                 <div class="testi-contain text-white">
                                                     <i class="bx bxs-quote-alt-left text-success display-6"></i>
-                                                    <h4 class="mt-4 fw-medium lh-base text-white">“Our task must be to
-                                                        free ourselves by widening our circle of compassion to embrace
-                                                        all living creatures and the whole of quis consectetur nunc sit amet semper justo. nature and its beauty.”</h4>
+                                                    <h4 class="mt-4 fw-medium lh-base text-white">“Ensure the security of your account. Use a strong, unique password and never share your credentials. Keep your system safe and secure.”</h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-shrink-0">
-                                                                <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" class="avatar-md img-fluid rounded-circle" alt="...">
+                                                                <i class="mdi mdi-lock-outline avatar-md img-fluid rounded-circle" style="font-size: 3rem;"></i>
                                                             </div>
                                                             <div class="flex-grow-1 ms-3 mb-4">
-                                                                <h5 class="font-size-18 text-white">Rosanna French</h5>
-                                                                <p class="mb-0 text-white-50">Web Developer</p>
+                                                                <h5 class="font-size-18 text-white">Security First</h5>
+                                                                <p class="mb-0 text-white-50">Best Practices</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                            <!-- Carousel Item 3: Admin Role Overview -->
                                             <div class="carousel-item">
                                                 <div class="testi-contain text-white">
                                                     <i class="bx bxs-quote-alt-left text-success display-6"></i>
-                                                    <h4 class="mt-4 fw-medium lh-base text-white">“I've learned that
-                                                        people will forget what you said, people will forget what you
-                                                        did, but people will never forget
-                                                        how donec in efficitur lectus, nec lobortis metus you made them feel.”</h4>
+                                                    <h4 class="mt-4 fw-medium lh-base text-white">“As a Super Admin, you have full control over all modules and user permissions. You can manage admins, roles, and access rights for the entire application.”</h4>
                                                     <div class="mt-4 pt-3 pb-5">
                                                         <div class="d-flex align-items-start">
-                                                            <img src="{{ asset('backend/assets/images/users/avatar-1.jpg') }}" class="avatar-md img-fluid rounded-circle" alt="...">
-                                                            <div class="flex-1 ms-3 mb-4">
-                                                                <h5 class="font-size-18 text-white">Ilse R. Eaton</h5>
-                                                                <p class="mb-0 text-white-50">Manager</p>
+                                                            <div class="flex-shrink-0">
+                                                                <i class="mdi mdi-account-star-outline avatar-md img-fluid rounded-circle" style="font-size: 3rem;"></i>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-3 mb-4">
+                                                                <h5 class="font-size-18 text-white">Your Role</h5>
+                                                                <p class="mb-0 text-white-50">Super Administrator</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -224,13 +182,13 @@
         </div>
     </div>
 
+    <!-- JS Links -->
     <script src="{{ asset('backend/assets/libs/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/metismenu/metisMenu.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/feather-icons/feather.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/libs/pace-js/pace.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/pages/pass-addon.init.js') }}"></script>
 
 </body>

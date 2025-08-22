@@ -24,7 +24,7 @@ class Admin extends Authenticatable
     protected $guard = 'admin'; // Specifies this model uses the 'admin' authentication guard
     protected $guarded = []; // Allows all attributes to be mass assignable (opposite of $fillable)
 
-     protected $guard_name = 'admin';
+    protected $guard_name = 'admin';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -65,13 +65,14 @@ class Admin extends Authenticatable
     }
 
     // Check if a given role has all the permissions in a collection.
-    public static function roleHasPermissions($role,$permissions){
-            $hasPermission = true;
-            foreach ($permissions as $key => $permission) {
-               if (!$role->hasPermissionTo($permission->name)) {
-                $hasPermission = false;
-               }
-               return $hasPermission;
-            }
+    public static function roleHasPermissions($role, $permissions){
+        $hasPermission = true;
+        foreach ($permissions as $permission) {
+           if (!$role->hasPermissionTo($permission->name)) {
+            $hasPermission = false;
+            break; // Exit early if any permission is missing
+           }
+        }
+        return $hasPermission; // Move return outside the loop
     }
 }

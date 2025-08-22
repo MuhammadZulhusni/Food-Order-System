@@ -13,36 +13,28 @@
                     </a>
                 </li>
 
-                @if (Auth::guard('admin')->user()->can('category.menu')) 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="tag"></i>
                         <span data-key="t-apps">Category</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        @if (Auth::guard('admin')->user()->can('category.all')) 
                         <li>
                             <a href="{{ route('all.category') }}">
                                 <span data-key="t-calendar">All Category</span>
                             </a>
                         </li>
-
-
-                        @endif
-                        @if (Auth::guard('admin')->user()->can('category.add')) 
                         <li>
                             <a href="{{ route('add.category') }}">
                                 <span data-key="t-chat">Add Category</span>
                             </a>
                         </li> 
-                    @endif
                     </ul>
                 </li>
-                @endif
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="map-pin"></i>
                         <span data-key="t-apps">City</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -56,7 +48,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="shopping-bag"></i>
                         <span data-key="t-apps">Manage Product</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -75,7 +67,7 @@
                 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="briefcase"></i>
                         <span data-key="t-apps">Manage Restaurant</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -94,7 +86,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="image"></i>
                         <span data-key="t-apps">Manage Banner</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -108,7 +100,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
+                        <i data-feather="shopping-cart"></i>
                         <span data-key="t-apps">Manage Orders</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -139,7 +131,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="briefcase"></i>
+                        <i data-feather="bar-chart-2"></i>
                         <span data-key="t-components">Manage Reports</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -149,7 +141,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="gift"></i>
+                        <i data-feather="star"></i>
                         <span data-key="t-ui-elements">Manage Review</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -160,7 +152,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="gift"></i>
+                        <i data-feather="users"></i>
                         <span data-key="t-ui-elements">Role & Permission</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -173,7 +165,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="gift"></i>
+                        <i data-feather="user-check"></i>
                         <span data-key="t-ui-elements">Manage Admin</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">

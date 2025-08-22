@@ -2,21 +2,21 @@
     <div class="navbar-header">
         <div class="d-flex">
             <div class="navbar-brand-box">
-                <a href="index.html" class="logo logo-dark">
+                <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="24">
+                        <img src="{{ asset('super-admin.png') }}" alt="" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="24"> <span class="logo-txt">Admin</span>
+                        <img src="{{ asset('super-admin.png') }}" alt="" height="24"> <span class="logo-txt">Admin</span>
                     </span>
                 </a>
 
-                <a href="index.html" class="logo logo-light">
+                <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="24">
+                        <img src="{{ asset('super-admin.png') }}" alt="" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="24"> <span class="logo-txt">Admin</span>
+                        <img src="{{ asset('super-admin.png') }}" alt="" height="24"> <span class="logo-txt">Admin</span>
                     </span>
                 </a>
             </div>
@@ -24,13 +24,6 @@
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
-
-            <form class="app-search d-none d-lg-block">
-                <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <button class="btn btn-primary" type="button"><i class="bx bx-search-alt align-middle"></i></button>
-                </div>
-            </form>
         </div>
 
         <div class="d-flex">
