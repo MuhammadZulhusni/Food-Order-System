@@ -36,9 +36,9 @@
              </div>
              <h6 class="mt-4 text-shadow text-white font-weight-normal">E.g. Pizza, Burgers, Sushi, Vegan, Thai...</h6>
              <div class="owl-carousel owl-carousel-category owl-theme">
-    @php
-       $products = App\Models\Product::latest()->limit(8)->get();
-    @endphp           
+            @php
+               $products = App\Models\Product::latest()->limit(8)->get();
+            @endphp           
               @foreach ($products  as $product) 
               <div class="item">
                    <div class="osahan-category-item">
